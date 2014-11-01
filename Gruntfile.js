@@ -29,6 +29,8 @@ module.exports = function (grunt) {
     // Project settings
     yeoman: appConfig,
 
+    deployLocation: 'pi:/var/www/pihome/',
+
     // Watches files for changes and runs tasks based on the changed files
     watch: {
       bower: {
@@ -414,6 +416,12 @@ module.exports = function (grunt) {
         configFile: 'test/karma.conf.js',
         singleRun: true
       }
+    },
+
+    shell: {
+        deploy: {
+            command: 'scp -r dist/* <%= deployLocation %>'
+        }
     }
   });
 
@@ -464,6 +472,8 @@ module.exports = function (grunt) {
     'usemin',
     'htmlmin'
   ]);
+
+  grunt.registerTask('deploy', ['shell']);
 
   grunt.registerTask('default', [
     'newer:jshint',
