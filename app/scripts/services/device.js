@@ -18,7 +18,7 @@ angular.module('pihomeApp')
 
           handleError: function(response) {
               self.loading = false;
-              self.error = 'Error occurred: ' + (response.status === 0 ? 'API is not working' : response.statusText);
+              self.error = 'Error occurred: ' + response.status + ' ' + (response.status === 0 ? 'API is not working' : response.statusText);
           },
 
           load: function (model) {

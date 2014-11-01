@@ -1,5 +1,5 @@
 <div class="container" ng-init="device.load(model)">
-    <div ng-include="views/partials/error.html"></div>
+    <div ng-include="'views/partials/error.html'"></div>
     <div class="row" ng-repeat="(key,switch) in device.data._embedded">
         <div class="col-xs-6">{{ switch.name }}</div>
         <div class="col-xs-6">
