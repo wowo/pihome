@@ -1,0 +1,18 @@
+<br/>
+<div class="container" ng-init="loadSwitches()">
+    <div class="alert alert-danger" role="alert" ng-show="error">{{ error }}</div>
+    <div class="row" ng-repeat="(key,switch) in data._embedded">
+        <div class="col-xs-6">{{ switch.name }}</div>
+        <div class="col-xs-6">
+            <button type="button" class="btn btn-block" ng-disabled="loading"
+                    ng-class="{'label-danger': '0' == switch.state, 'label-success': '1' == switch.state}" ng-click="toggleSwitch(key, '1' == switch.state ? '0' : '1')">
+                {{ '0' == switch.state ? 'Turn on': 'Turn off' }}
+            </button>
+            <br/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="pull-right"><small ng-class="{'text-muted' : loading}" ng-show="lastUpdate">Last update: {{ lastUpdate | date : 'medium' }}</small></div>
+    </div>
+</div>
+<br/>
