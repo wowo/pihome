@@ -1,7 +1,6 @@
-<br/>
-<div class="container" ng-init="loadSwitches()">
-    <div class="alert alert-danger" role="alert" ng-show="error">{{ error }}</div>
-    <div class="row" ng-repeat="(key,switch) in data._embedded">
+<div class="container" ng-init="device.load(model)">
+    <div ng-include="views/partials/error.html"></div>
+    <div class="row" ng-repeat="(key,switch) in device.data._embedded">
         <div class="col-xs-6">{{ switch.name }}</div>
         <div class="col-xs-6">
             <button type="button" class="btn btn-block" ng-disabled="loading"
@@ -11,8 +10,5 @@
             <br/>
         </div>
     </div>
-    <div class="row">
-        <div class="pull-right"><small ng-class="{'text-muted' : loading}" ng-show="lastUpdate">Last update: {{ lastUpdate | date : 'medium' }}</small></div>
-    </div>
+    <div class="row" ng-include="'views/partials/update.html'"></div>
 </div>
-<br/>

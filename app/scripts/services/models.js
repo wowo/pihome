@@ -10,4 +10,7 @@
 angular.module('pihomeApp')
 .factory('Switch', function ($resource, API_ENDPOINT) {
     return $resource(API_ENDPOINT + '/switch/:key', {id: '@key'}, {'patch': {method: 'PATCH'}});
+})
+.factory('Sensor', function ($resource, API_ENDPOINT) {
+    return $resource(API_ENDPOINT + '/sensor');
 });

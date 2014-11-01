@@ -23,14 +23,16 @@
     <div class="container">
       <div class="header">
         <ul class="nav nav-pills pull-right">
-          <li class="active"><a ng-href="#">Steering</a></li>
-          <li><a ng-href="#/sensors">Sensors</a></li>
-            <li><a ng-href="#/forecast">Weather</a></li>
+          <li ng-class="{active: location.path() == '/'}"><a ng-href="#">Steering</a></li>
+          <li ng-class="{active: location.path() == '/sensors'}"><a ng-href="#/sensors">Sensors</a></li>
+          <li ng-class="{active: location.path() == '/weather'}"><a ng-href="#/forecast">Weather</a></li>
         </ul>
         <h3 class="text-muted">PiHome</h3>
       </div>
 
+      <br/>
       <div ng-view=""></div>
+      <br/>
 
       <div class="footer">
         <p>&copy; Wojciech Sznapka 2014</p>
@@ -73,9 +75,10 @@
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/controllers/about.js"></script>
+        <script src="scripts/controllers/sensors.js"></script>
         <script src="scripts/services/models.js"></script>
-    <script src="scripts/config.js"></script>
+        <script src="scripts/config.js"></script>
+        <script src="scripts/services/device.js"></script>
         <!-- endbuild -->
 </body>
 </html>
