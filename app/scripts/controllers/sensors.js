@@ -15,7 +15,6 @@ angular.module('pihomeApp')
         $scope.device.load($scope.model);
 
         if (angular.isDefined($rootScope.intervalPromise)) {
-            console.log($rootScope.intervalPromise);
             $interval.cancel($rootScope.intervalPromise);
         }
         $rootScope.intervalPromise = $interval(function () { $scope.device.load($scope.model); }, REFRESH_INTERVAL);
