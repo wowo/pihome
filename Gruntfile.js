@@ -406,7 +406,7 @@ module.exports = function (grunt) {
               },
               constants: {
                   ENV: 'production',
-                  API_ENDPOINT: 'http://192.168.254.9/api',
+                  API_ENDPOINT: '/api',
                   REFRESH_INTERVAL: 20 * 1000,
                   FORECAST_ROW: 463,
                   FORECAST_COL: 211
