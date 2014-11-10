@@ -23,6 +23,7 @@ angular.module('pihomeApp')
 
           load: function (model) {
               self.loading = true;
+              self.error = null;
               model.get(null, function (data) {
                   self.data = data;
                   self.loading = false;

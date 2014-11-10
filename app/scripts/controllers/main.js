@@ -19,9 +19,13 @@ angular.module('pihomeApp')
         }
         $rootScope.intervalPromise = $interval(function () { $scope.device.load($scope.model); }, REFRESH_INTERVAL);
 
-        $scope.toggleSwitch = function(key, newState) {
+        $scope.toggleSwitch = function(key, newState, duration) {
             $scope.loading = true;
-            Switch.patch({key: key}, {state: newState}, function (data) {
+            var data = {state: newState};
+            if (angular.isDefined(duration)) {
+                data.duration = duration;
+            }
+            Switch.patch({key: key}, data, function (data) {
                 $scope.device.data._embedded[key] = data;
                 $scope.loading = false;
             }, $scope.device.handleError);

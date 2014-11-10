@@ -12,11 +12,6 @@
                     <th>Avg</th>
                 </tr>
             </thead>
-            <tfoot>
-                <tr>
-                    <td colspan="5" ng-include="'views/partials/update.html'"></td>
-                </tr>
-            </tfoot>
             <tbody>
                 <tr ng-repeat="(key,sensor) in device.data._embedded">
                     <td class="col-xs-4">{{ sensor.name }}</td>
@@ -28,4 +23,5 @@
             </tbody>
         </table>
     </div>
+    <div class="row" ng-include="'views/partials/update.html'"></div>
 </div>
