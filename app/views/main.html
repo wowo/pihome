@@ -6,12 +6,12 @@
                 <button type="button" class="btn" ng-disabled="loading"
                         ng-class="{'label-danger': '0' == switch.state, 'label-success': '1' == switch.state}"
                         ng-click="toggleSwitch(key, '1' == switch.state ? '0' : '1')">
-                    Turn {{ '0' == switch.state ? 'on': 'off' }}
+                    <span class="hidden-xs">Turn </span>{{ '0' == switch.state ? 'On': 'Off' }}
                 </button>
                 <div class="btn-group">
                     <button type="button" ng-disabled="loading" class="btn dropdown-toggle" data-toggle="dropdown"
                             ng-class="{'label-danger': '0' == switch.state, 'label-success': '1' == switch.state}">
-                        Turn {{ '0' == switch.state ? 'on': 'off' }} for
+                        <span class="hidden-xs">Turn </span>{{ '0' == switch.state ? 'On': 'Off' }} for
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
