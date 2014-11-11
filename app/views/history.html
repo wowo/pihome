@@ -1,0 +1,27 @@
+<div class="container">
+    <div ng-include="views/partials/error.html"></div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Switch</th>
+                    <th>When</th>
+                    <th>State</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in items">
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.date | amCalendar }}</td>
+                    <td><span class="label" ng-class="{'label-success': item.state == 1, 'label-danger': item.state == 0 }">{{ item.state == '1' ? 'On' : 'Off' }}</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <div class="col-xs-4 col-xs-push-4">
+            <button class="btn btn-block btn-info" ng-click="loadMore()" ng-disabled="loading">Load more</button>
+        </div>
+    </div>
+</div>

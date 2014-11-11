@@ -16,6 +16,7 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
+    'angularMoment',
     'config'
   ])
   .config(function ($routeProvider) {
@@ -31,6 +32,10 @@ angular
       .when('/weather', {
           templateUrl: 'views/weather.html',
           controller: 'WeatherCtrl'
+      })
+      .when('/history', {
+          templateUrl: 'views/history.html',
+          controller: 'HistoryCtrl'
       })
       .otherwise({
         redirectTo: '/'
