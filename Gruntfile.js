@@ -394,7 +394,7 @@ module.exports = function (grunt) {
               },
               constants: {
                   ENV: 'development',
-                  API_ENDPOINT: 'http://192.168.254.128:8999',
+                  API_ENDPOINT: 'http://192.168.254.9/api',
                   REFRESH_INTERVAL: 5 * 1000,
                   FORECAST_ROW: 463,
                   FORECAST_COL: 211

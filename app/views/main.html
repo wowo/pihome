@@ -9,18 +9,18 @@
                     Turn {{ '0' == switch.state ? 'on': 'off' }}
                 </button>
                 <div class="btn-group">
-                    <button type="button"  class="btn dropdown-toggle" data-toggle="dropdown"
+                    <button type="button" ng-disabled="loading" class="btn dropdown-toggle" data-toggle="dropdown"
                             ng-class="{'label-danger': '0' == switch.state, 'label-success': '1' == switch.state}">
                         Turn {{ '0' == switch.state ? 'on': 'off' }} for
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="#" ng-click="toggleSwitch(key, '1' == switch.state ? '0' : '1', 1)">1 minute</a></li>
-                        <li><a href="#" ng-click="toggleSwitch(key, '1' == switch.state ? '0' : '1', 15)">15 minutes</a></li>
-                        <li><a href="#" ng-click="toggleSwitch(key, '1' == switch.state ? '0' : '1', 60)">1 hour</a></li>
-                        <li><a href="#" ng-click="toggleSwitch(key, '1' == switch.state ? '0' : '1', 180)">3 hours</a></li>
-                        <li><a href="#" ng-click="toggleSwitch(key, '1' == switch.state ? '0' : '1', 360)">6 hours</a></li>
-                        <li><a href="#" ng-click="toggleSwitch(key, '1' == switch.state ? '0' : '1', 720)">12 hours</a></li>
+                        <li><a ng-click="toggleSwitch(key, '1' == switch.state ? '0' : '1', 1)">1 minute</a></li>
+                        <li><a ng-click="toggleSwitch(key, '1' == switch.state ? '0' : '1', 15)">15 minutes</a></li>
+                        <li><a ng-click="toggleSwitch(key, '1' == switch.state ? '0' : '1', 60)">1 hour</a></li>
+                        <li><a ng-click="toggleSwitch(key, '1' == switch.state ? '0' : '1', 180)">3 hours</a></li>
+                        <li><a ng-click="toggleSwitch(key, '1' == switch.state ? '0' : '1', 360)">6 hours</a></li>
+                        <li><a ng-click="toggleSwitch(key, '1' == switch.state ? '0' : '1', 720)">12 hours</a></li>
                     </ul>
                 </div>
             <br/>
