@@ -1,7 +1,10 @@
 <div class="container" ng-init="device.load(model)">
     <div ng-include="'views/partials/error.html'"></div>
     <div class="row" ng-repeat="(key,switch) in device.data._embedded">
-        <div class="col-xs-4">{{ switch.name }}</div>
+        <div class="col-xs-4">
+            {{ switch.name }}
+            <small ng-show="switch.scheduled"><br/><span class="label" ng-class="{'label-danger': '0' == switch.scheduled.state, 'label-success': '1' == switch.scheduled.state}">{{ '1' == switch.scheduled.state ? 'On': 'Off' }}</span> {{ switch.scheduled.when | date : 'shortTime' }}</small>
+        </div>
         <div class="col-xs-8">
                 <button type="button" class="btn" ng-disabled="loading"
                         ng-class="{'label-danger': '0' == switch.state, 'label-success': '1' == switch.state}"
