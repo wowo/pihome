@@ -17,7 +17,8 @@ angular
     'ngSanitize',
     'ngTouch',
     'angularMoment',
-    'config'
+    'config',
+    'n3-line-chart'
   ])
   .config(function ($routeProvider) {
     $routeProvider

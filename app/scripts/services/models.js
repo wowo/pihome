@@ -14,6 +14,9 @@ angular.module('pihomeApp')
 .factory('Sensor', function ($resource, API_ENDPOINT) {
     return $resource(API_ENDPOINT + '/sensor');
 })
+.factory('Reading', function ($resource, API_ENDPOINT) {
+    return $resource(API_ENDPOINT + '/reading');
+})
 .factory('History', function ($resource, API_ENDPOINT) {
     return $resource(API_ENDPOINT + '/history');
 });
