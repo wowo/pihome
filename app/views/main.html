@@ -1,6 +1,10 @@
-<div class="container" ng-init="device.load(model)">
+<div class="container">
     <div ng-include="'views/partials/error.html'"></div>
-    <div class="row" ng-repeat="(key,switch) in device.data._embedded">
+    <h3>Control <img src="images/preloader_small.gif" alt="loading" ng-show="switchDevice.data && switchDevice.loading"/></h3>
+    <div class="row" style="text-align: center" ng-show="!switchDevice.data">
+        <img src="images/preloader.gif" alt="loading" style="float: none; margin: 0 auto"/>
+    </div>
+    <div class="row" ng-repeat="(key,switch) in switchDevice.data">
         <div class="col-xs-4">
             {{ switch.name }}
             <small ng-show="switch.scheduled"><br/><span class="label" ng-class="{'label-danger': '0' == switch.scheduled.state, 'label-success': '1' == switch.scheduled.state}">{{ '1' == switch.scheduled.state ? 'On': 'Off' }}</span> {{ switch.scheduled.when | date : 'shortTime' }}</small>
@@ -18,8 +22,8 @@
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a ng-click="toggleSwitch(key, '1' == switch.state ? '0' : '1', 1)">1 minute</a></li>
                         <li><a ng-click="toggleSwitch(key, '1' == switch.state ? '0' : '1', 15)">15 minutes</a></li>
+                        <li><a ng-click="toggleSwitch(key, '1' == switch.state ? '0' : '1', 30)">30 minutes</a></li>
                         <li><a ng-click="toggleSwitch(key, '1' == switch.state ? '0' : '1', 60)">1 hour</a></li>
                         <li><a ng-click="toggleSwitch(key, '1' == switch.state ? '0' : '1', 180)">3 hours</a></li>
                         <li><a ng-click="toggleSwitch(key, '1' == switch.state ? '0' : '1', 360)">6 hours</a></li>
@@ -28,6 +32,15 @@
                 </div>
             <br/>
             <br/>
+        </div>
+    </div>
+    <h3>Sensors <img src="images/preloader_small.gif" alt="loading" ng-show="sensorDevice.data && sensorDevice.loading"/></h3>
+    <div class="row" style="text-align: center" ng-show="!sensorDevice.data">
+        <img src="images/preloader.gif" alt="loading" style="float: none; margin: 0 auto"/>
+    </div>
+    <div class="row">
+        <div ng-repeat="sensor in sensorDevice.data" class="col-xs-4">
+            <div class="well" ng-class="{ 'text-danger': sensor.value <= 0, 'text-warning': sensor.value < 4 && sensor.value > 0 }">{{ sensor.value }}&deg;C<br/>{{ sensor.name }}</div>
         </div>
     </div>
     <div class="row" ng-include="'views/partials/update.html'"></div>

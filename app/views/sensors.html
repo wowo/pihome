@@ -1,30 +1,10 @@
 <div class="container" ng-init="device.load(model)">
     <div ng-include="views/partials/error.html"></div>
-
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Sensor</th>
-                    <th>Current</th>
-                    <th>Min</th>
-                    <th>Max</th>
-                    <th>Avg</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="(key,sensor) in device.data._embedded">
-                    <td class="col-xs-4">{{ sensor.name }}</td>
-                    <td class="col-xs-2" ng-class="{'text-danger' : sensor.value < 0}">{{ sensor.value }} &deg;C</td>
-                    <td class="col-xs-2">n/a</td>
-                    <td class="col-xs-2">n/a</td>
-                    <td class="col-xs-2">n/a</td>
-                </tr>
-            </tbody>
-        </table>
+    <div style="text-align: center">
+        <img src="images/preloader.gif" alt="loading" style="float: none; margin: 0 auto" ng-show="!data"/>
     </div>
     <div>
-        <linechart data="data" options="options" mode="" width="" height=""></linechart>
+        <linechart data="data" options="options" ng-show="data"></linechart>
     </div>
     <div class="row" ng-include="'views/partials/update.html'"></div>
 </div>
