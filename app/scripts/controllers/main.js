@@ -33,7 +33,7 @@ angular.module('pihomeApp')
             $scope.loading = true;
             var data = {state: newState};
             if (angular.isDefined(duration)) {
-                data.duration = duration;
+                data.duration = duration !== 0 ? duration : window.prompt('How many hours', 9) * 60 ;
             }
             Switch.patch({key: key}, data, function (data) {
                 $scope.switchDevice.data[key] = data;

@@ -18,10 +18,10 @@ angular.module('pihomeApp')
             $scope.loading = true;
             History.get({page: $scope.page, count: $scope.count}, function(data) {
                 $scope.items = $scope.items.concat(data._embedded);
-                $scope.loading = false
+                $scope.loading = false;
             }, function (response) {
-                $socpe.loading = false;
-                self.error = 'Error occurred: ' + response.status + ' ' + (response.status === 0 ? 'API is not working' : response.statusText);
+                $scope.loading = false;
+                $scope.error = 'Error occurred: ' + response.status + ' ' + (response.status === 0 ? 'API is not working' : response.statusText);
             });
         };
 
