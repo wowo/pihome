@@ -21,9 +21,8 @@ angular.module('pihomeApp')
                 y: {type: 'linear'}
             },
             series: [
+                {y: 'outdoor-north', id: 'outdoor-north', thickness: '1px', type: 'line', label: 'Zewnątrz północ', drawDots: true, dotSize: 2},
                 {y: 'office', id: 'office', thickness: '1px', type: 'line', label: 'Gabinet', drawDots: true, dotSize: 2},
-                {y: 'office2', id: 'office2', thickness: '1px', type: 'line', label: 'Gabinet okno', drawDots: true, dotSize: 2},
-                {y: 'outdoor-west', id: 'outdoor-west', thickness: '1px', type: 'line', label: 'Zewnątrz zachód', drawDots: true, dotSize: 2}
             ],
             lineMode: 'linear',
             tooltip: {mode: 'axes', formatter: function(x, y) {return moment(x).fromNow() + ' : ' + y;}},
