@@ -18,7 +18,8 @@ angular
     'ngTouch',
     'angularMoment',
     'config',
-    'n3-line-chart'
+    'n3-line-chart',
+    'angular-cron-jobs'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -29,6 +30,10 @@ angular
       .when('/sensors', {
         templateUrl: 'views/sensors.html',
         controller: 'SensorCtrl'
+      })
+      .when('/schedule', {
+        templateUrl: 'views/schedule.html',
+        controller: 'ScheduleCtrl'
       })
       .when('/weather', {
           templateUrl: 'views/weather.html',

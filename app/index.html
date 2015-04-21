@@ -12,6 +12,7 @@
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="bower_components/angular-cron-jobs/dist/angular-cron-jobs.min.css">
     <!-- endbuild -->
   </head>
   <body ng-app="pihomeApp">
@@ -25,6 +26,7 @@
         <ul class="nav nav-pills pull-right">
           <li ng-class="{active: location.path() == '/'}"><a ng-href="#">Main</a></li>
           <li ng-class="{active: location.path() == '/sensors'}"><a ng-href="#/sensors">Sensors</a></li>
+          <li ng-class="{active: location.path() == '/schedue'}"><a ng-href="#/schedule">Schedule</a></li>
           <li ng-class="{active: location.path() == '/history'}"><a ng-href="#/history">History</a></li>
           <li ng-class="{active: location.path() == '/weather'}"><a ng-href="#/weather">Weather</a></li>
         </ul>
@@ -74,6 +76,7 @@
     <script src="bower_components/angular-moment/angular-moment.js"></script>
     <script src="bower_components/d3/d3.js"></script>
     <script src="bower_components/n3-line-chart/build/line-chart.min.js"></script>
+    <script src="bower_components/angular-cron-jobs/dist/angular-cron-jobs.min.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -86,6 +89,7 @@
         <script src="scripts/services/device.js"></script>
         <script src="scripts/controllers/weather.js"></script>
         <script src="scripts/controllers/history.js"></script>
+        <script src="scripts/controllers/schedule.js"></script>
         <!-- endbuild -->
 </body>
 </html>

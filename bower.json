@@ -14,7 +14,8 @@
     "angular-route": "~1.2.0",
     "angular-moment": "~0.8.2",
     "n3-line-chart": "~1.1.6",
-    "d3": "~3.5.5"
+    "d3": "~3.5.5",
+    "angular-cron-jobs": "file:///home/wowo/Development/angular-cron-jobs/.git"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.0",

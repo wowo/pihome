@@ -30,5 +30,5 @@ angular.module('pihomeApp')
             drawDots: false,
             columnsHGap: 5,
             tension: 0.7
-        }
+        };
     });
