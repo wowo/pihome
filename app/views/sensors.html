@@ -1,5 +1,33 @@
 <div class="container" ng-init="device.load(model)">
     <div ng-include="views/partials/error.html"></div>
+    <div>
+        <div class="form-group">
+            <label class="control-label"><i class="fa fa-calendar"></i> <i class="fa fa-arrows-h"></i> <i class="fa fa-calendar"></i> Date range</label><br>
+            <div class="form-group col-xs-6">
+                <input type="text"
+                       class="form-control"
+                       placeholder="Since"
+                       ng-model="since"
+                       ng-disabled="!data"
+                       data-max-date="{{until}}"
+                       data-date-format="dd-MM-yyyy"
+                       data-autoclose="true"
+                       bs-datepicker>
+            </div>
+            <div class="form-group col-xs-6">
+                <input type="text"
+                       class="form-control"
+                       placeholder="Until"
+                       ng-disabled="!data"
+                       ng-model="until"
+                       data-min-date="{{since}}"
+                       data-max-date="{{maxDate}}"
+                       data-date-format="dd-MM-yyyy"
+                       data-autoclose="true"
+                       bs-datepicker>
+            </div>
+        </div>
+    </div>
     <div style="text-align: center">
         <img src="images/preloader.gif" alt="loading" style="float: none; margin: 0 auto" ng-show="!data"/>
     </div>
