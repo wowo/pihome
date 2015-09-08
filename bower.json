@@ -15,7 +15,7 @@
     "angular-moment": "~0.8.2",
     "n3-line-chart": "~1.1.6",
     "d3": "~3.5.5",
-    "angular-cron-jobs": "file:///home/wowo/Development/angular-cron-jobs/.git",
+    "angular-cron-jobs": "~1.4",
     "angular-strap": "~2.2.4"
   },
   "devDependencies": {

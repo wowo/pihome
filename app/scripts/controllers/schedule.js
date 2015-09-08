@@ -8,7 +8,7 @@
  * Controller of the pihomeApp
  */
 angular.module('pihomeApp')
-    .controller('ScheduleCtrl', function ($scope) {
+    .controller('ScheduleCtrl', function ($scope, Schedule) {
         $scope.config = {
             options: {
                 allowYear: false,
@@ -16,10 +16,7 @@ angular.module('pihomeApp')
                 allowWeek: true
             }
         };
-        $scope.schedules = [
-            {cron: '50 18 * * *', task: 'switch.patch', args: {key: 'hot_water_pump', state: 'on'}},
-            {cron: '30 19 * * *', task: 'switch.patch', args: {key: 'hot_water_pump', state: 'off'}}
-        ];
+        $scope.schedules = Schedule.get();
 
         $scope.addSchedule = function() {
             $scope.schedules.push({cron: '1 */5 * * 200', task: 'baz'});

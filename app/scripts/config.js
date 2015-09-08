@@ -4,7 +4,7 @@ angular.module('config', [])
 
 .constant('ENV', 'development')
 
-.constant('API_ENDPOINT', 'http://192.168.254.9/api')
+.constant('API_ENDPOINT', 'http://0.0.0.0:8999')
 
 .constant('REFRESH_INTERVAL', 60000)
 

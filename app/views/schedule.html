@@ -1,28 +1,13 @@
 <input type="button" class="btn btn-info" value="Add task" ng-click="addSchedule()"/>
 <br/>
 <br/>
-<div ng-repeat="schedule in schedules">
-    <cron-selection output="schedule.cron" init="schedule.cron" config="config"></cron-selection>
-    {{ schedule.cron }}
-    {{ schedule.task }}
-    {{ schedule.args }}
-</div>
+<div ng-repeat="schedule in schedules._embedded" class="zebra-row">
+    <button class="btn"
+            ng-class="{'label-danger': '0' == schedule.state, 'label-success': '1' == schedule.state}">{{
+        schedule.name}}
+    </button>
 
-<hr>
-<cron-selection output="test"></cron-selection>
-{{ test }}
-<hr>
-<cron-selection output="test2" init="'15 * * * *'"></cron-selection>
-testing "15 * * * *" result: {{ test2 }}
-<hr>
-<cron-selection output="test3" init="'20 19 * * *'"></cron-selection>
-testing "20 19 * * *" result: {{ test3 }}
-<hr>
-<cron-selection output="test4" init="'25 1 * * 3'"></cron-selection>
-testing "25 1 * * 3" result: {{ test4 }}
-<hr>
-<cron-selection output="test5" init="'30 10 7 * *'"></cron-selection>
-testing "30 10 7 * *" result: {{ test5 }}
-<hr>
-<cron-selection output="test6" init="'35 23 29 4 *'"></cron-selection>
-testing "35 23 29 4 *" result: {{ test6 }}
+    <span class="glyphicon glyphicon-remove-circle"/></span>
+    <br/><br/>
+    <cron-selection output="scheduleOut.cron" init="schedule.schedule" config="config"></cron-selection>
+</div>
