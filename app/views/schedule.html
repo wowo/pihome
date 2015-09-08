@@ -6,7 +6,7 @@
             ng-class="{'label-danger': '0' == schedule.state, 'label-success': '1' == schedule.state}">{{
         schedule.name}}
     </button>
-
+    <span ng-show="schedule.duration"> for {{ schedule.duration }} minutes </span>
     <span class="glyphicon glyphicon-remove-circle"/></span>
     <br/><br/>
     <cron-selection output="scheduleOut.cron" init="schedule.schedule" config="config"></cron-selection>
