@@ -7,7 +7,7 @@
         schedule.name}}
     </button>
     <span ng-show="schedule.duration"> for {{ schedule.duration }} minutes </span>
-    <span class="glyphicon glyphicon-remove-circle"/></span>
+    <a ng-click="removeSchedule(schedule)" href=""><span class="glyphicon glyphicon-remove-circle"/></span></a>
     <br/><br/>
     <cron-selection output="scheduleOut.cron" init="schedule.schedule" config="config"></cron-selection>
 </div>
