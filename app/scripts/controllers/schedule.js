@@ -35,7 +35,7 @@ angular.module('pihomeApp')
         $scope.new = angular.copy($scope.newPrototype);
 
         $scope.loadSchedules =  function load () {
-            $scope.schedules = Schedule.get(function ok (data) {
+            $scope.schedules = Schedule.get(function ok () {
                 $scope.adding = false;
                 $scope.new = angular.copy($scope.newPrototype);
             }, function fail(error) {
