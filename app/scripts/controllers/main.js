@@ -10,7 +10,7 @@
 angular.module('pihomeApp')
     .controller('MainCtrl', function ($scope, $rootScope, $interval, REFRESH_INTERVAL, Device, Switch, Sensor) {
         $scope.switchDevice = new Device(Switch);
-        $scope.switchDevice.load();
+        $scope.switchDevice.load(true);
 
         $scope.sensorDevice = new Device(Sensor);
         $scope.sensorDevice.load();

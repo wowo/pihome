@@ -13,7 +13,6 @@ angular.module('pihomeApp')
             this.model = model;
             this.data = null;
             this.error = null;
-            this.lastUpdate =  null;
             this.loading = false;
         }
 
@@ -22,14 +21,43 @@ angular.module('pihomeApp')
                 this.loading = false;
                 this.error = 'Error occurred: ' + response.status + ' ' + (response.status === 0 ? 'API is not working' : response.statusText);
             },
-            load: function () {
+            load: function (groupAndSort) {
+                var that = this;
                 this.loading = true;
                 this.error = null;
-                var that = this;
                 this.model.get(null, function (data) {
-                    that.data = data._embedded;
+                    if (groupAndSort) {
+                        var order = {
+                            Lampa: 4,
+                            Podłogówka: 2,
+                            Pompa: 3,
+                            Roleta: 1
+                        };
+                        that.data = _.groupBy(data._embedded, function (val) {
+                            return val.name.split(' ')[0];
+                        });
+                        that.data = _.mapValues(that.data, function (groupped) {
+                            return _.mapValues(groupped, function (val) {
+                                val.name = val.name.split(' ').slice(1).join(' ');
+                                val.name = val.name.charAt(0).toUpperCase() + val.name.substr(1);
+
+                                return val;
+                            });
+                        });
+                        that.data = _.map(that.data, function (val, key) {
+                            return {
+                                name: key,
+                                switches: val
+                            };
+                        });
+                        that.data = _.sortBy(that.data, function (val) {
+                            return order[val.name];
+                        });
+                    } else {
+                        that.data = data._embedded;
+                    }
+
                     that.loading = false;
-                    that.lastUpdate = new Date();
                 },this.handleError);
             }
         };

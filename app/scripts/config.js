@@ -2,11 +2,11 @@
 
 angular.module('config', [])
 
-.constant('ENV', 'development')
+.constant('ENV', 'production')
 
-.constant('API_ENDPOINT', 'http://0.0.0.0:8999')
+.constant('API_ENDPOINT', '/api')
 
-.constant('REFRESH_INTERVAL', 60000)
+.constant('REFRESH_INTERVAL', 20000)
 
 .constant('FORECAST_ROW', 463)
 
