@@ -19,20 +19,20 @@
             </div>
             <div class="col-xs-8">
                 <div class="btn-group" role="group" ng-if="'two_way' == switch.type">
-                    <button type="button" class="btn btn-lg btn-info" ng-disabled="loading" ng-click="toggleSwitch(key, 'up')">
+                    <button type="button" class="btn btn-lg btn-info" ng-disabled="loading" ng-click="toggleSwitch(switch.key, 'up')">
                         &nbsp;<span class="glyphicon glyphicon-circle-arrow-up"></span>&nbsp;
                     </button>
-                    <button type="button" class="btn btn-lg btn-info" ng-disabled="loading" ng-click="toggleSwitch(key, 'stop')">
+                    <button type="button" class="btn btn-lg btn-info" ng-disabled="loading" ng-click="toggleSwitch(switch.key, 'stop')">
                         &nbsp;<span class="glyphicon glyphicon-remove-circle"></span>&nbsp;
                     </button>
-                    <button type="button" class="btn btn-lg btn-info" ng-disabled="loading" ng-click="toggleSwitch(key, 'down')">
+                    <button type="button" class="btn btn-lg btn-info" ng-disabled="loading" ng-click="toggleSwitch(switch.key, 'down')">
                         &nbsp;<span class="glyphicon glyphicon-circle-arrow-down"></span>&nbsp;
                     </button>
                 </div>
                 <div class="btn-group" role="group" ng-if="'two_way' != switch.type">
                     <button type="button" class="btn btn-lg" ng-disabled="loading"
                             ng-class="{'label-danger': '0' == switch.state, 'label-success': '1' == switch.state}"
-                            ng-click="toggleSwitch(key, '1' == switch.state ? '0' : '1')">
+                            ng-click="toggleSwitch(switch.key, '1' == switch.state ? '0' : '1')">
                         &nbsp;<span class="glyphicon" ng-class="{'glyphicon-off': '1' == switch.state, 'glyphicon-play-circle': '0' == switch.state}"></span>&nbsp;
                     </button>
                     <div class="btn-group">
@@ -42,12 +42,12 @@
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a ng-click="toggleSwitch(key, '1' == switch.state ? '0' : '1', 15)">15 minutes</a></li>
-                            <li><a ng-click="toggleSwitch(key, '1' == switch.state ? '0' : '1', 30)">30 minutes</a></li>
-                            <li><a ng-click="toggleSwitch(key, '1' == switch.state ? '0' : '1', 3*60)">3 hours</a></li>
-                            <li><a ng-click="toggleSwitch(key, '1' == switch.state ? '0' : '1', 6*60)">6 hours</a></li>
-                            <li><a ng-click="toggleSwitch(key, '1' == switch.state ? '0' : '1', 12*60)">12 hours</a></li>
-                            <li><a ng-click="toggleSwitch(key, '1' == switch.state ? '0' : '1', 0)">X hours</a></li>
+                            <li><a ng-click="toggleSwitch(switch.key, '1' == switch.state ? '0' : '1', 15)">15 minutes</a></li>
+                            <li><a ng-click="toggleSwitch(switch.key, '1' == switch.state ? '0' : '1', 30)">30 minutes</a></li>
+                            <li><a ng-click="toggleSwitch(switch.key, '1' == switch.state ? '0' : '1', 3*60)">3 hours</a></li>
+                            <li><a ng-click="toggleSwitch(switch.key, '1' == switch.state ? '0' : '1', 6*60)">6 hours</a></li>
+                            <li><a ng-click="toggleSwitch(switch.key, '1' == switch.state ? '0' : '1', 12*60)">12 hours</a></li>
+                            <li><a ng-click="toggleSwitch(switch.key, '1' == switch.state ? '0' : '1', 0)">X hours</a></li>
                         </ul>
                     </div>
                 </div>

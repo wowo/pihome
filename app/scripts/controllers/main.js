@@ -19,7 +19,7 @@ angular.module('pihomeApp')
             $interval.cancel($rootScope.intervalSwitch);
         }
         $rootScope.intervalSwitch = $interval(function() {
-            $scope.switchDevice.load();
+            $scope.switchDevice.load(true);
         }, REFRESH_INTERVAL);
 
         if (angular.isDefined($rootScope.intervalSensor)) {
@@ -36,7 +36,10 @@ angular.module('pihomeApp')
                 data.duration = duration !== 0 ? duration : window.prompt('How many hours', 9) * 60 ;
             }
             Switch.patch({key: key}, data, function (data) {
-                $scope.switchDevice.data[key] = data;
+                var group = data.name.split(' ')[0];
+                var index = _.findIndex($scope.switchDevice.data, {name: group});
+                var switchesIndex = _.findIndex($scope.switchDevice.data[index].switches, {key: key});
+                $scope.switchDevice.data[index].switches[switchesIndex] = data;
                 $scope.loading = false;
             }, $scope.switchDevice.handleError);
         };
