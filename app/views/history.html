@@ -14,7 +14,17 @@
                 <tr ng-repeat="item in items">
                     <td>{{ item.name }}</td>
                     <td>{{ item.date | amCalendar }}</td>
-                    <td><span class="label" ng-class="{'label-success': item.state == 1, 'label-danger': item.state == 0 }">{{ item.state == '1' ? 'On' : 'Off' }}</span></td>
+                    <td>
+                        <span class="label label-info" ng-show="item.state == 'up' || item.state == 'down'">
+                            {{ item.state }}
+                        </span>
+                        <span
+                                class="label"
+                                ng-show="item.state == 0 || item.state == 1"
+                                ng-class="{'label-success': item.state == 1, 'label-danger': item.state == 0}">
+                            {{ item.state == '1' ? 'On' : 'Off' }}
+                        </span>
+                    </td>
                 </tr>
             </tbody>
         </table>
