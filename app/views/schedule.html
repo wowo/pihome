@@ -36,13 +36,32 @@
 <div class="row" style="text-align: center" ng-show="!schedules._embedded">
     <img src="images/preloader.gif" alt="loading" style="float: none; margin: 0 auto"/>
 </div>
-<div ng-repeat="schedule in schedules._embedded" class="form-group">
-    <button class="btn"
-            ng-class="{'label-danger': '0' == schedule.state, 'label-success': '1' == schedule.state}">{{
-        schedule.name}}
-    </button>
-    <span ng-show="schedule.duration"> for {{ schedule.duration }} minutes </span>
-    <a ng-click="removeSchedule(schedule)" href=""><span class="glyphicon glyphicon-remove-circle"/></span></a>
-    <br/><br/>
-    <cron-selection output="scheduleOut.cron" init="schedule.schedule" config="config"></cron-selection>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Switch</th>
+                <th>Duration</th>
+                <th>Schedule</th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="schedule in schedules._embedded">
+                <td>
+                    <span class="label"
+                            ng-class="{'label-danger': '0' == schedule.state, 'label-success': '1' == schedule.state}">
+                        {{ schedule.name}}
+                    </span>
+                </td>
+                <td>for {{ schedule.duration | duration }}</td>
+                <td>
+                    <cron-selection output="scheduleOut.cron" init="schedule.schedule" config="config" readonly="true"></cron-selection>
+                </td>
+                <td>
+                    <a ng-click="removeSchedule(schedule)" href=""><span class="glyphicon glyphicon-remove-circle"/></span></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>

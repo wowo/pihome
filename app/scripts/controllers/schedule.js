@@ -34,8 +34,8 @@ angular.module('pihomeApp')
         };
         $scope.new = angular.copy($scope.newPrototype);
 
-        $scope.loadSchedules =  function load () {
-            $scope.schedules = Schedule.get(function ok () {
+        $scope.loadSchedules =  function load() {
+            $scope.schedules = Schedule.get(function ok() {
                 $scope.adding = false;
                 $scope.new = angular.copy($scope.newPrototype);
             }, function fail(error) {
@@ -49,15 +49,15 @@ angular.module('pihomeApp')
             var schedule = new Schedule($scope.new);
             schedule.duration = schedule.duration * schedule.multiplier;
             delete schedule.multiplier;
-            schedule.$save(function ok () {
-                $scope.loadSchedules();
+            schedule.$save(function ok() {
+                $scope.loadSchedules()
             });
         };
 
         $scope.removeSchedule = function remove(entry) {
             if ($window.confirm('Are you sure to delete this entry?')) {
                 var schedule = new Schedule({id: entry.id});
-                schedule.$delete(function ok () {
+                schedule.$delete(function ok() {
                     $scope.loadSchedules();
                 });
             }
