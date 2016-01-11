@@ -8,7 +8,21 @@
  * Controller of the pihomeApp
  */
 angular.module('pihomeApp')
-    .controller('ScheduleCtrl', function ($scope, $window, Schedule) {
+    .filter('duration', function() {
+        return function (input) {
+            var duration = '';
+            var hours = Math.floor(input / 60);
+            var minutes = input % 60;
+            if (hours > 0) {
+                duration = hours + ' hours ';
+            }
+            if (minutes > 0) {
+                duration += minutes + ' minutes';
+            }
+
+            return duration || '-';
+        };
+    }).controller('ScheduleCtrl', function ($scope, $window, Schedule, Switch) {
         $scope.config = {
             options: {
                 allowYear: false,
@@ -17,12 +31,16 @@ angular.module('pihomeApp')
             }
         };
 
-        $scope.switches = {
-            heating_ground_floor: 'Podłogówka parter',
-            heating_first_floor: 'Podłogówka piętro',
-            hot_water_pump: 'Pompa CWU',
-            light_stairs: 'Lampa schody',
-            light_hall: 'Lampa hall'
+        Switch.get(function ok(data) {
+            $scope.switches = _.mapValues(data._embedded, 'name');
+        });
+
+        $scope.states = {
+            0: 'Off',
+            1: 'On',
+            click: 'Click',
+            up: 'Up',
+            down: 'Down'
         };
 
         $scope.newPrototype = {
@@ -34,7 +52,7 @@ angular.module('pihomeApp')
         };
         $scope.new = angular.copy($scope.newPrototype);
 
-        $scope.loadSchedules =  function load() {
+        $scope.loadSchedules = function load() {
             $scope.schedules = Schedule.get(function ok() {
                 $scope.adding = false;
                 $scope.new = angular.copy($scope.newPrototype);
@@ -47,10 +65,14 @@ angular.module('pihomeApp')
         $scope.addSchedule = function add() {
             $scope.adding = true;
             var schedule = new Schedule($scope.new);
-            schedule.duration = schedule.duration * schedule.multiplier;
+            if (schedule.duration > 0) {
+                schedule.duration = schedule.duration * schedule.multiplier;
+            } else {
+                delete schedule.duration;
+            }
             delete schedule.multiplier;
             schedule.$save(function ok() {
-                $scope.loadSchedules()
+                $scope.loadSchedules();
             });
         };
 

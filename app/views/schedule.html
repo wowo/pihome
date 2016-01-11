@@ -1,12 +1,12 @@
-<form class="form-horizontal well well-sm">
+<form class="form-horizontal well well-sm" >
     <div class="form-group">
         <label class="col-xs-2 input-sm">Switch</label>
         <div class="col-xs-5">
             <select ng-options="key as value for (key, value) in switches" ng-model="new.switch"
-                    class="form-control input-sm"></select>
+                    class="form-control input-sm" ng-disabled="!switches"></select>
         </div>
         <div class="col-xs-5">
-            <select ng-options="key as value for (key, value) in {0: 'Off', 1: 'On'}" ng-model="new.state"
+            <select ng-options="key as value for (key, value) in states" ng-model="new.state"
                     class="form-control input-sm"></select>
         </div>
     </div>
@@ -50,13 +50,22 @@
             <tr ng-repeat="schedule in schedules._embedded">
                 <td>
                     <span class="label"
-                            ng-class="{'label-danger': '0' == schedule.state, 'label-success': '1' == schedule.state}">
+                            ng-class="{
+                                'label-danger': '0' == schedule.state,
+                                'label-success': '1' == schedule.state,
+                                'label-info': 'up' == schedule.state || 'down' == schedule.state || 'click' == schedule.state
+                                }">
                         {{ schedule.name}}
+                    </span>&nbsp;
+                    <span class="label label-info" ng-show="'up' == schedule.state || 'down' == schedule.state">
+                        {{ schedule.state }}
                     </span>
                 </td>
-                <td>for {{ schedule.duration | duration }}</td>
                 <td>
-                    <cron-selection output="scheduleOut.cron" init="schedule.schedule" config="config" readonly="true"></cron-selection>
+                    {{ schedule.duration | duration }}
+                </td>
+                <td>
+                    <cron-selection output="scheduleOut.cron" init="schedule.schedule" config="config" isreadonly="true"></cron-selection>
                 </td>
                 <td>
                     <a ng-click="removeSchedule(schedule)" href=""><span class="glyphicon glyphicon-remove-circle"/></span></a>

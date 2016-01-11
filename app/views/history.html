@@ -15,7 +15,7 @@
                     <td>{{ item.name }}</td>
                     <td>{{ item.date | amCalendar }}</td>
                     <td>
-                        <span class="label label-info" ng-show="item.state == 'up' || item.state == 'down'">
+                        <span class="label label-info" ng-show="item.state == 'up' || item.state == 'down' || item.state == 'click'">
                             {{ item.state }}
                         </span>
                         <span

@@ -28,7 +28,12 @@
                         <span class="glyphicon glyphicon-circle-arrow-down"></span>
                     </button>
                 </div>
-                <div class="btn-group" role="group" ng-if="'two_way' != switch.type">
+                <div ng-if="'click' == switch.type">
+                    <button type="button" class="btn btn-info col-xs-4" ng-disabled="switch.loading" ng-click="toggleSwitch(switch, 'click')">
+                        <span class="glyphicon glyphicon-sort"></span>
+                    </button>
+                </div>
+                <div class="btn-group" role="group" ng-if="'ethernet' == switch.type">
                     <button type="button" class="btn" ng-disabled="switch.loading"
                             ng-class="{'label-danger': '0' == switch.state, 'label-success': '1' == switch.state}"
                             ng-click="toggleSwitch(switch, '1' == switch.state ? '0' : '1')">

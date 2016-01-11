@@ -26,18 +26,4 @@ angular.module('pihomeApp')
         };
 
         $scope.loadMore();
-    }).filter('duration', function() {
-        return function (input) {
-            var duration = '';
-            var hours = Math.floor(input / 60);
-            var minutes = input % 60;
-            if (hours > 0) {
-                duration = hours + ' hours ';
-            }
-            if (minutes > 0) {
-                duration += minutes + ' minutes';
-            }
-
-            return duration;
-        };
     });
