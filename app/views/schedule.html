@@ -1,49 +1,26 @@
-<form class="form-horizontal well well-sm" >
-    <div class="form-group">
-        <label class="col-xs-2 input-sm">Switch</label>
-        <div class="col-xs-5">
-            <select ng-options="key as value for (key, value) in switches" ng-model="new.switch"
-                    class="form-control input-sm" ng-disabled="!switches"></select>
-        </div>
-        <div class="col-xs-5">
-            <select ng-options="key as value for (key, value) in states" ng-model="new.state"
-                    class="form-control input-sm"></select>
-        </div>
+<div class="row">
+    <div class="col-sm-12">
+        <button class="btn btn-info btn-sm" ng-click="editSchedule({
+            state: '1',
+            duration: 30,
+            multiplier: '1',
+            schedule: ''
+        })">New task</button>
+        <br/>
+        <br/>
     </div>
-    <div class="form-group">
-        <label class="col-xs-2 input-sm">Duration</label>
-        <div class="col-xs-5">
-            <input ng-model="new.duration" class="form-control input-sm"/>
-        </div>
-        <div class="col-xs-5">
-            <select ng-options="key as value for (key, value) in {1: 'Minutes', 60: 'Hours'}" ng-model="new.multiplier"
-                    class="form-control input-sm"></select>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-xs-2 input-sm">Schedule</label>
-        <div class="col-xs-10 form-group-sm">
-            <cron-selection config="config" output="new.schedule"></cron-selection>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-xs-10 col-xs-push-2">
-            <input type="button" class="btn btn-info btn-sm" value="Add task" ng-click="addSchedule()" ng-disabled="adding"/>
-        </div>
-    </div>
-</form>
-<br/>
-<div class="row" style="text-align: center" ng-show="!schedules._embedded">
+</div>
+<div class="row text-center" ng-show="!schedules._embedded">
     <img src="images/preloader.gif" alt="loading" style="float: none; margin: 0 auto"/>
 </div>
-<div class="table-responsive">
+<div class="table-responsive" ng-show="schedules._embedded">
     <table class="table table-striped">
         <thead>
             <tr>
                 <th>Switch</th>
                 <th>Duration</th>
                 <th>Schedule</th>
-                <th>Remove</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -68,7 +45,8 @@
                     <cron-selection output="scheduleOut.cron" init="schedule.schedule" config="config" isreadonly="true"></cron-selection>
                 </td>
                 <td>
-                    <a ng-click="removeSchedule(schedule)" href=""><span class="glyphicon glyphicon-remove-circle"/></span></a>
+                    <a ng-click="removeSchedule(schedule)" href=""><span class="glyphicon glyphicon-remove-circle"/></span></a>&nbsp;&nbsp;
+                    <a ng-click="editSchedule(schedule)" href=""><span class="glyphicon glyphicon-edit"/></span></a>
                 </td>
             </tr>
         </tbody>

@@ -20,6 +20,7 @@ angular
     'config',
     'n3-line-chart',
     'mgcrea.ngStrap.datepicker',
+    'mgcrea.ngStrap.modal',
     'angular-cron-jobs'
   ])
   .config(function ($routeProvider) {

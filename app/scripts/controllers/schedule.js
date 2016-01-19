@@ -22,7 +22,7 @@ angular.module('pihomeApp')
 
             return duration || '-';
         };
-    }).controller('ScheduleCtrl', function ($scope, $window, Schedule, Switch) {
+    }).controller('ScheduleCtrl', function ($scope, $window, Schedule, Switch, $modal, $q) {
         $scope.config = {
             options: {
                 allowYear: false,
@@ -43,22 +43,11 @@ angular.module('pihomeApp')
             down: 'Down'
         };
 
-        $scope.newPrototype = {
-            switch: 'hot_water_pump',
-            state: '1',
-            duration: 30,
-            multiplier: '1',
-            schedule: null
-        };
-        $scope.new = angular.copy($scope.newPrototype);
 
         $scope.loadSchedules = function load() {
             $scope.schedules = Schedule.get(function ok() {
-                $scope.adding = false;
-                $scope.new = angular.copy($scope.newPrototype);
             }, function fail(error) {
                 $window.alert(error.statusText ? error.statusText : 'Connection problem');
-                $scope.adding = false;
             });
         };
 
@@ -85,6 +74,20 @@ angular.module('pihomeApp')
             }
 
             return false;
+        };
+
+        $scope.editSchedule = function edit(entry) {
+            $scope.new = angular.copy(entry);
+            $scope.new.multiplier = '1';
+            if (entry.duration % 60 === 0) {
+                $scope.new.multiplier = '60';
+                $scope.new.duration /= 60;
+            }
+            var modalPromise = $modal({
+                contentTemplate: 'views/partials/scheduleForm.html',
+                persist: true,
+                scope: $scope
+            });
         };
 
         $scope.loadSchedules();
