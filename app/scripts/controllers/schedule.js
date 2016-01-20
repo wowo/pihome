@@ -22,7 +22,13 @@ angular.module('pihomeApp')
 
             return duration || '-';
         };
-    }).controller('ScheduleCtrl', function ($scope, $window, Schedule, Switch, $modal, $q) {
+    })
+    .controller('ScheduleCtrl', function ($scope, $window, Schedule, Switch, $modal) {
+        var modalInstance = null;
+        var saveSuccess = function() {
+            modalInstance.$promise.then(modalInstance.hide());
+            $scope.loadSchedules();
+        };
         $scope.config = {
             options: {
                 allowYear: false,
@@ -30,11 +36,6 @@ angular.module('pihomeApp')
                 allowWeek: true
             }
         };
-
-        Switch.get(function ok(data) {
-            $scope.switches = _.mapValues(data._embedded, 'name');
-        });
-
         $scope.states = {
             0: 'Off',
             1: 'On',
@@ -43,29 +44,34 @@ angular.module('pihomeApp')
             down: 'Down'
         };
 
+        Switch.get(function(data) {
+            $scope.switches = _.mapValues(data._embedded, 'name');
+        });
 
-        $scope.loadSchedules = function load() {
+        $scope.loadSchedules = function() {
             $scope.schedules = Schedule.get(function ok() {
             }, function fail(error) {
                 $window.alert(error.statusText ? error.statusText : 'Connection problem');
             });
         };
 
-        $scope.addSchedule = function add() {
-            $scope.adding = true;
-            var schedule = new Schedule($scope.new);
-            if (schedule.duration > 0) {
-                schedule.duration = schedule.duration * schedule.multiplier;
+        $scope.save = function(inputForm) {
+            $scope.saving = true;
+            var form = angular.copy(inputForm);
+            if (form.duration > 0) {
+                form.duration = form.duration * form.multiplier;
             } else {
-                delete schedule.duration;
+                delete form.duration;
             }
-            delete schedule.multiplier;
-            schedule.$save(function ok() {
-                $scope.loadSchedules();
-            });
+            delete form.multiplier;
+            if (angular.isDefined(form.id)) {
+                Schedule.update({id: form.id}, form, saveSuccess);
+            } else {
+                (new Schedule(form)).$save(saveSuccess);
+            }
         };
 
-        $scope.removeSchedule = function remove(entry) {
+        $scope.remove = function(entry) {
             if ($window.confirm('Are you sure to delete this entry?')) {
                 var schedule = new Schedule({id: entry.id});
                 schedule.$delete(function ok() {
@@ -76,14 +82,17 @@ angular.module('pihomeApp')
             return false;
         };
 
-        $scope.editSchedule = function edit(entry) {
-            $scope.new = angular.copy(entry);
-            $scope.new.multiplier = '1';
-            if (entry.duration % 60 === 0) {
-                $scope.new.multiplier = '60';
-                $scope.new.duration /= 60;
+        $scope.showForm = function(entry) {
+            $scope.schedule = angular.copy(entry);
+            $scope.schedule.multiplier = '1';
+            if (!angular.isDefined($scope.schedule.duration)) {
+                $scope.schedule.duration = 0;
             }
-            var modalPromise = $modal({
+            if (entry.duration % 60 === 0) {
+                $scope.schedule.multiplier = '60';
+                $scope.schedule.duration /= 60;
+            }
+            modalInstance = $modal({
                 contentTemplate: 'views/partials/scheduleForm.html',
                 persist: true,
                 scope: $scope

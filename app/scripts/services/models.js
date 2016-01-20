@@ -21,5 +21,5 @@ angular.module('pihomeApp')
         return $resource(API_ENDPOINT + '/history');
     })
     .factory('Schedule', function ($resource, API_ENDPOINT) {
-        return $resource(API_ENDPOINT + '/cron/:id', {id: '@id'});
+        return $resource(API_ENDPOINT + '/cron/:id', {id: '@id'}, {update: {method: 'PUT'}});
     });

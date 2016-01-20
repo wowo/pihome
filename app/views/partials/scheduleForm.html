@@ -1,34 +1,35 @@
 <form class="form-horizontal well well-sm" >
+    <input type="hidden" ng-model="schedule.id"/>
     <div class="form-group">
         <label class="col-xs-2 input-sm">Switch</label>
         <div class="col-xs-5">
-            <select ng-options="key as value for (key, value) in switches" ng-model="new.switch"
-                    class="form-control input-sm" ng-disabled="!switches"></select>
+            <select ng-options="key as value for (key, value) in switches" ng-model="schedule.switch"
+                    class="form-control input-sm" ng-disabled="!switches || schedule.id"></select>
         </div>
         <div class="col-xs-5">
-            <select ng-options="key as value for (key, value) in states" ng-model="new.state"
-                    class="form-control input-sm"></select>
+            <select ng-options="key as value for (key, value) in states" ng-model="schedule.state"
+                    class="form-control input-sm" ng-disabled="schedule.id"></select>
         </div>
     </div>
     <div class="form-group">
         <label class="col-xs-2 input-sm">Duration</label>
         <div class="col-xs-5">
-            <input ng-model="new.duration" class="form-control input-sm"/>
+            <input ng-model="schedule.duration" class="form-control input-sm"/>
         </div>
         <div class="col-xs-5">
-            <select ng-options="key as value for (key, value) in {1: 'Minutes', 60: 'Hours'}" ng-model="new.multiplier"
+            <select ng-options="key as value for (key, value) in {1: 'Minutes', 60: 'Hours'}" ng-model="schedule.multiplier"
                     class="form-control input-sm"></select>
         </div>
     </div>
     <div class="form-group">
         <label class="col-xs-2 input-sm">Schedule</label>
         <div class="col-xs-10 form-group-sm">
-            <cron-selection config="config" output="new.schedule" init="new.schedule"></cron-selection>
+            <cron-selection config="config" output="schedule.schedule" init="schedule.schedule"></cron-selection>
         </div>
     </div>
     <div class="form-group">
         <div class="col-xs-10 col-xs-push-2">
-            <input type="button" class="btn btn-info btn-sm" value="Save task" ng-click="saveSchedule()"/>
+            <button class="btn btn-info btn-sm" ng-click="save(schedule)">Save task</button>
         </div>
     </div>
 </form>

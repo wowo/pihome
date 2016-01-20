@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-sm-12">
-        <button class="btn btn-info btn-sm" ng-click="editSchedule({
+        <button class="btn btn-info btn-sm" ng-click="showForm({
             state: '1',
             duration: 30,
             multiplier: '1',
@@ -45,8 +45,8 @@
                     <cron-selection output="scheduleOut.cron" init="schedule.schedule" config="config" isreadonly="true"></cron-selection>
                 </td>
                 <td>
-                    <a ng-click="removeSchedule(schedule)" href=""><span class="glyphicon glyphicon-remove-circle"/></span></a>&nbsp;&nbsp;
-                    <a ng-click="editSchedule(schedule)" href=""><span class="glyphicon glyphicon-edit"/></span></a>
+                    <a ng-click="remove(schedule)" href=""><span class="glyphicon glyphicon-remove-circle"/></span></a>&nbsp;&nbsp;
+                    <a ng-click="showForm(schedule)" href=""><span class="glyphicon glyphicon-edit"/></span></a>
                 </td>
             </tr>
         </tbody>
