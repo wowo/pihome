@@ -1,11 +1,11 @@
 <div class="row">
     <div class="col-sm-12">
-        <button class="btn btn-info btn-sm" ng-click="showForm({
+        <button class="btn btn-info" ng-click="showForm({
             state: '1',
             duration: 30,
             multiplier: '1',
             schedule: ''
-        })">New task</button>
+        })">Create</button>
         <br/>
         <br/>
     </div>
@@ -45,8 +45,8 @@
                     <cron-selection output="scheduleOut.cron" init="schedule.schedule" config="config" isreadonly="true"></cron-selection>
                 </td>
                 <td>
-                    <a ng-click="remove(schedule)" href=""><span class="glyphicon glyphicon-remove-circle"/></span></a>&nbsp;&nbsp;
-                    <a ng-click="showForm(schedule)" href=""><span class="glyphicon glyphicon-edit"/></span></a>
+                    <button class="btn btn-danger" ng-click="remove(schedule)" href=""><span class="glyphicon glyphicon-remove-circle"/></span></button>&nbsp;&nbsp;
+                    <button class="btn btn-info" ng-click="showForm(schedule)" href=""><span class="glyphicon glyphicon-edit"/></span></button>
                 </td>
             </tr>
         </tbody>

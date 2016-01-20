@@ -26,7 +26,7 @@ angular.module('pihomeApp')
     .controller('ScheduleCtrl', function ($scope, $window, Schedule, Switch, $modal) {
         var modalInstance = null;
         var saveSuccess = function() {
-            modalInstance.$promise.then(modalInstance.hide());
+            modalInstance.$promise.then(modalInstance.hide);
             $scope.loadSchedules();
         };
         $scope.config = {
@@ -97,6 +97,10 @@ angular.module('pihomeApp')
                 persist: true,
                 scope: $scope
             });
+        };
+
+        $scope.hideForm = function() {
+            modalInstance.$promise.then(modalInstance.hide);
         };
 
         $scope.loadSchedules();
