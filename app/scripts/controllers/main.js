@@ -20,7 +20,7 @@ angular.module('pihomeApp')
         }
         $rootScope.intervalSwitch = $interval(function() {
             $scope.switchDevice.load(true);
-        }, REFRESH_INTERVAL);
+        }, REFRESH_INTERVAL * 2);
 
         if (angular.isDefined($rootScope.intervalSensor)) {
             $interval.cancel($rootScope.intervalSensor);

@@ -1,14 +1,31 @@
-<div class="container">
     <div ng-include="'views/partials/error.html'"></div>
-    <h2>Control <img src="images/preloader_small.gif" alt="loading" ng-show="switchDevice.data && switchDevice.loading"/></h2>
-    <div class="row" style="text-align: center" ng-show="!switchDevice.data">
-        <img src="images/preloader.gif" alt="loading" style="float: none; margin: 0 auto"/>
+
+    <p class="text-center" ng-show="sensorDevice.loading">
+        <img src="images/preloader_small.gif" alt="loading"/>
+    </p>
+    <div class="row">
+        <div ng-repeat="sensor in sensorDevice.data" class="col-xs-4 col-lg-3">
+            <div class="panel panel-default">
+                <div class="panel-heading text-center">
+                    <small><strong>{{ sensor.name }}</strong></small>
+                </div>
+                <div class="panel-body text-center">
+                    <span ng-class="{ 'text-danger': sensor.value <= 0, 'text-warning': sensor.value < 4 && sensor.value > 0 }">
+                        {{ sensor.value }}&deg;C
+                    </span>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <p class="text-center" ng-show="switchDevice.loading">
+        <img src="images/preloader_small.gif" alt="loading"/>
+    </p>
     <div ng-repeat="group in switchDevice.data">
 
-        <h3>{{ group.name }}</h3>
+        <h4 class="text-center">{{ group.name }}</h4>
         <div class="row">
-            <div class="col-xs-6" ng-repeat="(key, switch) in group.switches">
+            <div class="col-xs-6 col-lg-3" ng-repeat="(key, switch) in group.switches">
                 <strong>{{ switch.name }}</strong>
                 <small ng-show="switch.scheduled">
                     <span class="label" ng-class="{'label-danger': '0' == switch.scheduled.state, 'label-success': '1' == switch.scheduled.state}">
@@ -58,14 +75,4 @@
             </div>
         </div>
     </div>
-    <h2>Sensors <img src="images/preloader_small.gif" alt="loading" ng-show="sensorDevice.data && sensorDevice.loading"/></h2>
-    <div class="row" style="text-align: center" ng-show="!sensorDevice.data">
-        <img src="images/preloader.gif" alt="loading" style="float: none; margin: 0 auto"/>
-    </div>
-    <div class="row">
-        <div ng-repeat="sensor in sensorDevice.data" class="col-xs-6">
-            <div class="well" ng-class="{ 'text-danger': sensor.value <= 0, 'text-warning': sensor.value < 4 && sensor.value > 0 }">{{ sensor.value }}&deg;C<br/>{{ sensor.name }}</div>
-        </div>
-    </div>
     <div class="row" ng-include="'views/partials/update.html'"></div>
-</div>
