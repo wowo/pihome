@@ -1,5 +1,4 @@
-<div class="container" ng-init="device.load(model)">
-    <div ng-include="views/partials/error.html"></div>
+<div class="container">
     <div>
         <div class="form-group">
             <label class="control-label"><i class="fa fa-calendar"></i> <i class="fa fa-arrows-h"></i> <i class="fa fa-calendar"></i> Date range</label><br>
@@ -32,7 +31,6 @@
         <img src="images/preloader.gif" alt="loading" style="float: none; margin: 0 auto" ng-show="!data"/>
     </div>
     <div>
-        <linechart data="data" options="options" ng-show="data"></linechart>
+        <linechart data="data" options="options"></linechart>
     </div>
-    <div class="row" ng-include="'views/partials/update.html'"></div>
 </div>
