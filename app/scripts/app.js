@@ -37,10 +37,6 @@ angular
         templateUrl: 'views/schedule.html',
         controller: 'ScheduleCtrl'
       })
-      .when('/weather', {
-          templateUrl: 'views/weather.html',
-          controller: 'WeatherCtrl'
-      })
       .when('/history', {
           templateUrl: 'views/history.html',
           controller: 'HistoryCtrl'

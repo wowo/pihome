@@ -18,18 +18,23 @@ angular.module('pihomeApp')
         if (angular.isDefined($rootScope.intervalSwitch)) {
             $interval.cancel($rootScope.intervalSwitch);
         }
-        $rootScope.intervalSwitch = $interval(function() {
+        $rootScope.intervalSwitch = $interval(function () {
             $scope.switchDevice.load(true);
         }, REFRESH_INTERVAL * 2);
 
         if (angular.isDefined($rootScope.intervalSensor)) {
             $interval.cancel($rootScope.intervalSensor);
         }
-        $rootScope.intervalSensor = $interval(function() {
+        $scope.$on('$routeChangeStart', function () {
+            $interval.cancel($rootScope.intervalSensor);
+            $interval.cancel($rootScope.intervalSwitch);
+        });
+
+        $rootScope.intervalSensor = $interval(function () {
             $scope.sensorDevice.load();
         }, REFRESH_INTERVAL);
 
-        $scope.toggleSwitch = function(switchObj, newState, duration) {
+        $scope.toggleSwitch = function (switchObj, newState, duration) {
             if ('two_way' == switchObj.type) {
                 switchObj[newState] = {loading: true};
             } else {
@@ -37,7 +42,7 @@ angular.module('pihomeApp')
             }
             var data = {state: newState};
             if (angular.isDefined(duration)) {
-                data.duration = duration !== 0 ? duration : window.prompt('How many hours', 9) * 60 ;
+                data.duration = duration !== 0 ? duration : window.prompt('How many hours', 9) * 60;
             }
             Switch.patch({key: switchObj.key}, data, function (data) {
                 var group = data.name.split(' ')[0];
