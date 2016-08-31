@@ -8,7 +8,7 @@
  * Factory in the pihomeApp.
  */
 angular.module('pihomeApp')
-    .factory('Device', function () {
+    .factory('Device', function ($timeout) {
         function Device(model) {
             this.model = model;
             this.data = null;
@@ -21,17 +21,18 @@ angular.module('pihomeApp')
                 this.loading = false;
                 this.error = 'Error occurred: ' + response.status + ' ' + (response.status === 0 ? 'API is not working' : response.statusText);
             },
-            load: function (groupAndSort) {
+            load: function (groupAndSort, interval) {
                 var that = this;
                 this.loading = true;
                 this.error = null;
                 this.model.get(null, function (data) {
                     if (groupAndSort) {
                         var order = {
-                            Lampa: 4,
-                            Podłogówka: 2,
+                            Brama: 1,
+                            Roleta: 2,
                             Pompa: 3,
-                            Roleta: 1
+                            Podłogówka: 4,
+                            Lampa: 5
                         };
                         that.data = _.groupBy(data._embedded, function (val) {
                             return val.name.split(' ')[0];
@@ -56,6 +57,9 @@ angular.module('pihomeApp')
                     } else {
                         that.data = data._embedded;
                     }
+                    $timeout(function() {
+                        that.load(groupAndSort, interval);
+                    }, interval);
 
                     that.loading = false;
                 },this.handleError);

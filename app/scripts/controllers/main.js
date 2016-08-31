@@ -8,31 +8,12 @@
  * Controller of the pihomeApp
  */
 angular.module('pihomeApp')
-    .controller('MainCtrl', function ($scope, $rootScope, $interval, REFRESH_INTERVAL, Device, Switch, Sensor) {
+    .controller('MainCtrl', function ($scope, REFRESH_INTERVAL, Device, Switch, Sensor) {
         $scope.switchDevice = new Device(Switch);
-        $scope.switchDevice.load(true);
-
         $scope.sensorDevice = new Device(Sensor);
-        $scope.sensorDevice.load();
 
-        if (angular.isDefined($rootScope.intervalSwitch)) {
-            $interval.cancel($rootScope.intervalSwitch);
-        }
-        $rootScope.intervalSwitch = $interval(function () {
-            $scope.switchDevice.load(true);
-        }, REFRESH_INTERVAL * 2);
-
-        if (angular.isDefined($rootScope.intervalSensor)) {
-            $interval.cancel($rootScope.intervalSensor);
-        }
-        $scope.$on('$routeChangeStart', function () {
-            $interval.cancel($rootScope.intervalSensor);
-            $interval.cancel($rootScope.intervalSwitch);
-        });
-
-        $rootScope.intervalSensor = $interval(function () {
-            $scope.sensorDevice.load();
-        }, REFRESH_INTERVAL);
+        $scope.switchDevice.load(true, REFRESH_INTERVAL * 2, 'switch');
+        $scope.sensorDevice.load(false, REFRESH_INTERVAL, 'sensor');
 
         $scope.toggleSwitch = function (switchObj, newState, duration) {
             if ('two_way' == switchObj.type) {

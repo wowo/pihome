@@ -479,8 +479,7 @@ module.exports = function (grunt) {
   grunt.registerTask('deploy', ['shell']);
 
   grunt.registerTask('default', [
-    'newer:jshint',
-    'test',
-    'build'
+    'build',
+    'deploy'
   ]);
 };

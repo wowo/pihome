@@ -1,28 +1,9 @@
     <div ng-include="'views/partials/error.html'"></div>
 
-    <p class="text-center" ng-show="sensorDevice.loading">
-        <img src="images/preloader_small.gif" alt="loading"/>
-    </p>
-    <div class="row">
-        <div ng-repeat="sensor in sensorDevice.data" class="col-xs-4 col-lg-3">
-            <div class="panel panel-default">
-                <div class="panel-heading text-center">
-                    <small><strong>{{ sensor.name }}</strong></small>
-                </div>
-                <div class="panel-body text-center">
-                    <span ng-class="{ 'text-danger': sensor.value <= 0, 'text-warning': sensor.value < 4 && sensor.value > 0 }">
-                        {{ sensor.value }}&deg;C
-                    </span>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <p class="text-center" ng-show="switchDevice.loading">
         <img src="images/preloader_small.gif" alt="loading"/>
     </p>
     <div ng-repeat="group in switchDevice.data">
-
         <h4 class="text-center">{{ group.name }}</h4>
         <div class="row">
             <div class="col-xs-6 col-lg-3" ng-repeat="(key, switch) in group.switches">
@@ -45,19 +26,19 @@
                         <span class="glyphicon glyphicon-circle-arrow-down"></span>
                     </button>
                 </div>
-                <div ng-if="'click' == switch.type">
+                <div ng-if="'click' == switch.type || 'click_sequence' == switch.type">
                     <button type="button" class="btn btn-info col-xs-4" ng-disabled="switch.loading" ng-click="toggleSwitch(switch, 'click')">
                         <span class="glyphicon glyphicon-sort"></span>
                     </button>
                 </div>
                 <div class="btn-group" role="group" ng-if="'ethernet' == switch.type">
-                    <button type="button" class="btn" ng-disabled="switch.loading"
+                    <button type="button" class="btn" ng-disabled="switch.loading || switch.state === null"
                             ng-class="{'label-danger': '0' == switch.state, 'label-success': '1' == switch.state}"
                             ng-click="toggleSwitch(switch, '1' == switch.state ? '0' : '1')">
                         &nbsp;<span class="glyphicon" ng-class="{'glyphicon-off': '1' == switch.state, 'glyphicon-play-circle': '0' == switch.state}"></span>&nbsp;
                     </button>
                     <div class="btn-group">
-                        <button type="button" ng-disabled="switch.loading" class="btn dropdown-toggle" data-toggle="dropdown"
+                        <button type="button" ng-disabled="switch.loading || switch.state === null" class="btn dropdown-toggle" data-toggle="dropdown"
                                 ng-class="{'label-danger': '0' == switch.state, 'label-success': '1' == switch.state}">
                             &nbsp;<span class="glyphicon glyphicon-time"></span>&nbsp;
                             <span class="caret"></span>
@@ -71,6 +52,24 @@
                             <li><a ng-click="toggleSwitch(switch, '1' == switch.state ? '0' : '1', 0)">X hours</a></li>
                         </ul>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p class="text-center">
+        <img src="images/preloader_small.gif" alt="loading" ng-show="sensorDevice.loading"/>
+    </p>
+    <div class="row">
+        <div ng-repeat="sensor in sensorDevice.data" class="col-xs-4 col-lg-3">
+            <div class="panel panel-default">
+                <div class="panel-heading text-center">
+                    <small><strong>{{ sensor.name }}</strong></small>
+                </div>
+                <div class="panel-body text-center">
+                    <span ng-class="{ 'text-danger': sensor.value <= 0, 'text-warning': sensor.value < 4 && sensor.value > 0 }">
+                        {{ sensor.value }}&deg;C
+                    </span>
                 </div>
             </div>
         </div>
