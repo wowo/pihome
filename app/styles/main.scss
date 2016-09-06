@@ -107,3 +107,19 @@ body {
 .panel-heading {
   padding: 0px 15px;
 }
+
+@media screen and (min-width: 360px) {
+  .btn-autosize {
+    padding: 6px 8px;
+    font-size: 95%;
+  }
+
+  .switch-name {
+    margin: 3px 0;
+    display: inline-block;
+  }
+
+  h4 {
+    margin-bottom: 0;
+  }
+}
