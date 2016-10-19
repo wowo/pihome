@@ -8,12 +8,17 @@
  * Controller of the pihomeApp
  */
 angular.module('pihomeApp')
-    .controller('MainCtrl', function ($scope, REFRESH_INTERVAL, Device, Switch, Sensor) {
+    .controller('MainCtrl', function ($scope, REFRESH_INTERVAL, Device, Switch, Sensor, CacheFactory) {
         $scope.switchDevice = new Device(Switch);
         $scope.sensorDevice = new Device(Sensor);
-
-        $scope.switchDevice.load(true, REFRESH_INTERVAL * 2, 'switch');
-        $scope.sensorDevice.load(false, REFRESH_INTERVAL, 'sensor');
+        if (!CacheFactory.get('switch')) {
+            CacheFactory('switch', {
+                storageMode: 'localStorage',
+                maxAge: 60*60*1000*24*31 // 31 days
+            });
+        }
+        $scope.switchDevice.load(true, REFRESH_INTERVAL * 2, CacheFactory.get('switch'));
+        $scope.sensorDevice.load(false, REFRESH_INTERVAL);
 
         $scope.toggleSwitch = function (switchObj, newState, duration) {
             if ('two_way' == switchObj.type) {
@@ -22,7 +27,8 @@ angular.module('pihomeApp')
                 switchObj.loading = true;
             }
             var data = {state: newState};
-            if (angular.isDefined(duration)) {
+            if (angular.isDefined(duration) && duration) {
+                duration = convertDurationToMinutes(duration);
                 data.duration = duration !== 0 ? duration : window.prompt('How many hours', 9) * 60;
             }
             Switch.patch({key: switchObj.key}, data, function (data) {
@@ -39,4 +45,24 @@ angular.module('pihomeApp')
                 }
             }, $scope.switchDevice.handleError);
         };
+
+        function convertDurationToMinutes(duration) {
+            var out = 0;
+            if (duration.indexOf('m') > -1) {
+                out = 1* duration.replace('m', '');
+            }
+            if (duration.indexOf('h') > -1) {
+                out = 60 * duration.replace('h', '');
+            }
+
+            return out;
+        }
+    })
+    .filter('durationLiteral', function() {
+        return function (input) {
+            input = input || '';
+            input = input.replace('h', ' hours').replace('m', ' minutes').replace(/^X$/, 'X hours');
+
+            return input;
+        }
     });
