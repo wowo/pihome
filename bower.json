@@ -2,17 +2,20 @@
   "name": "pihome",
   "version": "0.0.0",
   "dependencies": {
-    "angular": "^1.5",
+    "angular": "^1.6",
     "angular-cache": "~4.6.0",
-    "angular-cron-jobs": "~1.4",
-    "angular-resource": "~1.2.0",
-    "angular-route": "~1.2.0",
-    "angular-strap": "~2.2.4",
+    "angular-cron-jobs": "~3.2",
+    "angular-resource": "^1.6",
+    "angular-route": "^1.6",
+    "angular-strap": "^2.3",
     "bootstrap-sass-official": "~3.2.0",
     "d3": "~3.5.5",
     "json3": "~3.3.1",
     "lodash": "^4",
     "n3-line-chart": "~1.1.6"
   },
-  "appPath": "app"
+  "appPath": "app",
+  "resolutions": {
+    "angular": "^1.6"
+  }
 }

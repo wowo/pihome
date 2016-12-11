@@ -7,6 +7,7 @@
 // use this if you want to recursively match all subfolders:
 // 'test/spec/**/*.js'
 
+var modRewrite = require('connect-modrewrite');
 module.exports = function (grunt) {
 
   // Load grunt tasks automatically
@@ -81,6 +82,7 @@ module.exports = function (grunt) {
           middleware: function (connect) {
             return [
               connect.static('.tmp'),
+              modRewrite(['^[^\\.]*$ /index.html [L]']),
               connect().use(
                 '/bower_components',
                 connect.static('./bower_components')
