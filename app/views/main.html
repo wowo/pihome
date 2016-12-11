@@ -1,4 +1,4 @@
-    <div ng-include="'views/partials/error.html'"></div>
+            <div ng-include="'views/partials/error.html'"></div>
 
     <p class="text-center" ng-show="switchDevice.loading">
         <img src="images/preloader_small.gif" alt="loading"/>
@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-xs-4 col-lg-3" ng-repeat="(key, switch) in group.switches">
                 <strong class="switch-name">{{ switch.name }}</strong>
-                <small ng-show="switch.scheduled">
+                <small ng-show="switch.scheduled && !switch.stateless">
                     <span class="label" ng-class="{'label-danger': '0' == switch.scheduled.state, 'label-success': '1' == switch.scheduled.state}">
                         {{ '1' == switch.scheduled.state ? 'On': 'Off' }}
                     </span>&nbsp;
@@ -31,25 +31,27 @@
                         <span class="glyphicon glyphicon-sort"></span>
                     </button>
                 </div>
-                <div class="btn-group" role="group" ng-if="'ethernet' == switch.type">
-                    <button type="button" class="btn btn-autosize" ng-disabled="switch.loading || switch.state === null"
+                <div ng-class="{'btn-group': switch.durations && switch.durations.length > 1}" role="group" ng-if="'ethernet' == switch.type">
+                    <button type="button" class="btn btn-autosize"
+                            ng-disabled="switch.loading || switch.state === null"
                             ng-class="{'label-danger': '0' == switch.state, 'label-success': '1' == switch.state}"
-                            ng-click="toggleSwitch(switch, '1' == switch.state ? '0' : '1')">
-                        &nbsp;<span class="glyphicon" ng-class="{'glyphicon-off': '1' == switch.state, 'glyphicon-play-circle': '0' == switch.state}"></span>&nbsp;
+                            ng-click="toggleSwitch(switch, '1' == switch.state ? '0' : '1', switch.durations && switch.durations.length == 1 ? switch.durations[0] : null)">
+                        &nbsp;<span class="glyphicon" ng-class="{
+                            'glyphicon-off': '1' == switch.state && (!switch.durations || switch.durations.length > 1),
+                            'glyphicon-play-circle': '0' == switch.state && (!switch.durations || switch.durations.length > 1),
+                            'glyphicon-time': switch.durations && switch.durations.length == 1
+                            }"></span>&nbsp;
                     </button>
-                    <div class="btn-group">
+                    <div class="btn-group" ng-show="switch.durations && switch.durations.length > 1">
                         <button type="button" ng-disabled="switch.loading || switch.state === null" class="btn dropdown-toggle btn-autosize" data-toggle="dropdown"
                                 ng-class="{'label-danger': '0' == switch.state, 'label-success': '1' == switch.state}">
                             &nbsp;<span class="glyphicon glyphicon-time"></span>&nbsp;
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a ng-click="toggleSwitch(switch, '1' == switch.state ? '0' : '1', 15)">15 minutes</a></li>
-                            <li><a ng-click="toggleSwitch(switch, '1' == switch.state ? '0' : '1', 30)">30 minutes</a></li>
-                            <li><a ng-click="toggleSwitch(switch, '1' == switch.state ? '0' : '1', 3*60)">3 hours</a></li>
-                            <li><a ng-click="toggleSwitch(switch, '1' == switch.state ? '0' : '1', 6*60)">6 hours</a></li>
-                            <li><a ng-click="toggleSwitch(switch, '1' == switch.state ? '0' : '1', 12*60)">12 hours</a></li>
-                            <li><a ng-click="toggleSwitch(switch, '1' == switch.state ? '0' : '1', 0)">X hours</a></li>
+                            <li ng-repeat="duration in switch.durations">
+                                <a ng-click="toggleSwitch(switch, '1' == switch.state ? '0' : '1', duration)">{{ duration | durationLiteral }}</a>
+                            </li>
                         </ul>
                     </div>
                 </div>

@@ -42,7 +42,7 @@
                     {{ schedule.duration | duration }}
                 </td>
                 <td>
-                    <cron-selection output="scheduleOut.cron" init="schedule.schedule" config="config" isreadonly="true"></cron-selection>
+                    <cron-selection ng-model="schedule.schedule" config="config"></cron-selection>
                 </td>
                 <td>
                     <button class="btn btn-danger" ng-click="remove(schedule)" href=""><span class="glyphicon glyphicon-remove-circle"/></span></button>&nbsp;&nbsp;
