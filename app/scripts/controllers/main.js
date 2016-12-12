@@ -21,7 +21,7 @@ angular.module('pihomeApp')
         $scope.sensorDevice.load(false, REFRESH_INTERVAL);
 
         $scope.toggleSwitch = function (switchObj, newState, duration) {
-            if ('two_way' == switchObj.type) {
+            if ('two_way' === switchObj.type) {
                 switchObj[newState] = {loading: true};
             } else {
                 switchObj.loading = true;
@@ -38,7 +38,7 @@ angular.module('pihomeApp')
                 var index = _.findIndex($scope.switchDevice.data, {name: group});
                 var switchesIndex = _.findIndex(_.values($scope.switchDevice.data[index].switches), {key: switchObj.key});
                 $scope.switchDevice.data[index].switches[switchesIndex] = data;
-                if ('two_way' == switchObj.type) {
+                if ('two_way' === switchObj.type) {
                     switchObj[newState].loading = false;
                 } else {
                     switchObj.loading = false;
@@ -64,5 +64,5 @@ angular.module('pihomeApp')
             input = input.replace('h', ' hours').replace('m', ' minutes').replace(/^X$/, 'X hours');
 
             return input;
-        }
+        };
     });

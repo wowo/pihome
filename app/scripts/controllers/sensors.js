@@ -45,7 +45,7 @@ angular.module('pihomeApp')
                                 dotSize: 2
                             });
                         }
-                    })
+                    });
                 }
                 $scope.data = data._embedded;
             });

@@ -16,6 +16,7 @@ angular
         'n3-line-chart',
         'mgcrea.ngStrap.datepicker',
         'mgcrea.ngStrap.modal',
+        'angularMoment',
         'angular-cache',
         'angular-cron-jobs'
     ])

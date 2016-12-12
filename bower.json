@@ -12,6 +12,7 @@
     "d3": "~3.5.5",
     "json3": "~3.3.1",
     "lodash": "^4",
+    "angular-moment": "^1.0.1",
     "n3-line-chart": "~1.1.6"
   },
   "appPath": "app",
