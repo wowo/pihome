@@ -13,7 +13,6 @@ angular
         'ngResource',
         'ngRoute',
         'config',
-        'n3-line-chart',
         'mgcrea.ngStrap.datepicker',
         'mgcrea.ngStrap.modal',
         'angular-cache',

@@ -1,13 +1,12 @@
-<div class="container">
-    <div>
+<div class="row">
+    <div class="col-xs-12">
         <div class="form-group">
-            <label class="control-label"><i class="fa fa-calendar"></i> <i class="fa fa-arrows-h"></i> <i class="fa fa-calendar"></i> Date range</label><br>
+            <label class="control-label hidden-xs"><i class="fa fa-calendar"></i> <i class="fa fa-arrows-h"></i> <i class="fa fa-calendar"></i> Date range</label><br>
             <div class="form-group col-xs-6">
                 <input type="text"
                        class="form-control"
                        placeholder="Since"
                        ng-model="since"
-                       ng-disabled="!data"
                        data-max-date="{{until}}"
                        data-date-format="dd-MM-yyyy"
                        data-autoclose="true"
@@ -17,7 +16,6 @@
                 <input type="text"
                        class="form-control"
                        placeholder="Until"
-                       ng-disabled="!data"
                        ng-model="until"
                        data-min-date="{{since}}"
                        data-max-date="{{maxDate}}"
@@ -27,10 +25,7 @@
             </div>
         </div>
     </div>
-    <div style="text-align: center">
-        <img src="images/preloader.gif" alt="loading" style="float: none; margin: 0 auto" ng-show="!data"/>
-    </div>
-    <div>
-        <linechart data="data" options="options"></linechart>
-    </div>
+</div>
+<div class="row">
+    <div id="chart" style="height: 500px; width: 100%"></div>
 </div>
