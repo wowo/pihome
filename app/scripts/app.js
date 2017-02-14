@@ -15,6 +15,7 @@ angular
         'config',
         'mgcrea.ngStrap.datepicker',
         'mgcrea.ngStrap.modal',
+        'angularMoment',
         'angular-cache',
         'angular-cron-jobs'
     ])
