@@ -31,7 +31,7 @@
                         <span class="glyphicon glyphicon-sort"></span>
                     </button>
                 </div>
-                <div ng-class="{'btn-group': switch.durations && switch.durations.length > 1}" role="group" ng-if="'ethernet' == switch.type">
+                <div ng-class="{'btn-group': switch.durations && switch.durations.length > 1}" role="group" ng-if="'ethernet' == switch.type || 'raspberry' == switch.type">
                     <button type="button" class="btn btn-autosize"
                             ng-disabled="switch.loading || switch.state === null"
                             ng-class="{'label-danger': '0' == switch.state, 'label-success': '1' == switch.state}"
