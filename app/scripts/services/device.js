@@ -19,7 +19,7 @@ angular.module('pihomeApp')
         Device.prototype = {
             handleError: function (response) {
                 this.loading = false;
-                this.error = 'Error occurred: ' + response.status + ' ' + (response.status === 0 ? 'API is not working' : response.statusText);
+                this.error = 'Error occurred: ' + response.status + ' ' + (response.status <= 0 ? 'API is not working' : response.statusText);
             },
             processData: function (data, groupAndSort, cache) {
                 var result = _.values(data);
@@ -71,7 +71,7 @@ angular.module('pihomeApp')
                 if (angular.isDefined(cache)) {
                     this.data = this.processData(cache.get('values') || [], groupAndSort);
                 }
-                this.model.get(null, function (data) {
+                this.model.get(null, function ok (data) {
                     if (!angular.isDefined(cache)) {
                         that.data = [];
                     }
@@ -81,7 +81,9 @@ angular.module('pihomeApp')
                     }, interval);
 
                     that.loading = false;
-                }, this.handleError);
+                }, function error (response) {
+                    that.handleError(response);
+                });
             }
         };
 

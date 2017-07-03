@@ -1,4 +1,4 @@
-            <div ng-include="'views/partials/error.html'"></div>
+    <div class="alert alert-danger" role="alert" ng-show="switchDevice.error">{{ switchDevice.error }}</div>
 
     <p class="text-center" ng-show="switchDevice.loading">
         <img src="images/preloader_small.gif" alt="loading"/>
@@ -59,6 +59,7 @@
         </div>
     </div>
 
+    <div class="alert alert-danger" role="alert" ng-show="sensorDevice.error">{{ sensorDevice.error }}</div>
     <p class="text-center">
         <img src="images/preloader_small.gif" alt="loading" ng-show="sensorDevice.loading"/>
     </p>
