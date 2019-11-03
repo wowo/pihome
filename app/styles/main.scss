@@ -123,3 +123,16 @@ body {
     margin-bottom: 0;
   }
 }
+
+.history {
+  padding-left: 0;
+  padding-right: 0;
+}
+.sensors {
+  margin-top: 15px;
+}
+
+.switches-loading,
+.sensors-loading {
+  opacity: 0.5;
+}

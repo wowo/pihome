@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container history">
     <div ng-include="views/partials/error.html"></div>
 
     <div class="table-responsive">
@@ -8,12 +8,13 @@
                     <th>Switch</th>
                     <th>When</th>
                     <th>State</th>
+                    <th class="hidden-xs">User</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="item in items">
                     <td>{{ item.name }}</td>
-                    <td>{{ item.date | amCalendar }}</td>
+                    <td>{{ item.date | amCalendar }}<span class="visible-xs small text-muted">{{item.user}}</span> </td>
                     <td>
                         <span class="label label-info" ng-show="item.state == 'up' || item.state == 'down' || item.state == 'click'">
                             {{ item.state }}
@@ -25,6 +26,7 @@
                             {{ item.state == '1' ? 'On' : 'Off' }}
                         </span>
                     </td>
+                    <td class="hidden-xs">{{item.user}}</td>
                 </tr>
             </tbody>
         </table>
