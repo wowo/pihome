@@ -136,3 +136,8 @@ body {
 .sensors-loading {
   opacity: 0.5;
 }
+
+.cron-schedule,
+.cron-duration {
+  font-family: monospace, monospace;
+}

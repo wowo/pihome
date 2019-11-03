@@ -18,7 +18,7 @@
         <thead>
             <tr>
                 <th>Switch</th>
-                <th>Duration</th>
+                <th class="hidden-xs">Duration</th>
                 <th>Schedule</th>
                 <th>Actions</th>
             </tr>
@@ -35,18 +35,20 @@
                         {{ schedule.name}}
                     </span>&nbsp;
                     <span class="label label-info" ng-show="'up' == schedule.state || 'down' == schedule.state">
+                        <br class="visible-xs">
                         {{ schedule.state }}
                     </span>
                 </td>
-                <td>
+                <td class="cron-duration hidden-xs">
                     {{ schedule.duration | duration }}
                 </td>
-                <td>
-                    <cron-selection ng-model="schedule.schedule" config="config"></cron-selection>
+                <td class="cron-schedule">
+                    {{ schedule.schedule }}
+                    <small class="visible-xs">{{ schedule.duration | duration }}</small>
                 </td>
-                <td>
-                    <button class="btn btn-danger" ng-click="remove(schedule)" href=""><span class="glyphicon glyphicon-remove-circle"/></span></button>&nbsp;&nbsp;
-                    <button class="btn btn-info" ng-click="showForm(schedule)" href=""><span class="glyphicon glyphicon-edit"/></span></button>
+                <td class="schedule-actions">
+                    <button class="btn btn-danger btn-sm" ng-click="remove(schedule)" href=""><span class="glyphicon glyphicon-remove-circle"/></span></button>&nbsp;&nbsp;
+                    <button class="btn btn-info btn-sm" ng-click="showForm(schedule)" href=""><span class="glyphicon glyphicon-edit"/></span></button>
                 </td>
             </tr>
         </tbody>
