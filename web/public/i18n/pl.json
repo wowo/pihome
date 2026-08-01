@@ -1,0 +1,49 @@
+{
+  "nav": { "main": "Main", "schedule": "Harmonogram", "history": "Historia" },
+  "login": {
+    "title": "PiHome",
+    "subtitle": "Zaloguj się kontem Google",
+    "button": "Zaloguj przez Google",
+    "offlineHint": "Na sieci lokalnej logowanie nie jest wymagane"
+  },
+  "main": {
+    "error": "Błąd: {{message}}",
+    "offline": "Tryb offline — sterowanie lokalne",
+    "polling": "Brak połączenia z Supabase — odświeżanie z Pi",
+    "durationTitle": "{{name}} — włącz na…",
+    "noLimit": "Włącz bez limitu",
+    "custom": "Własny…",
+    "customPrompt": "Ile godzin?",
+    "on": "Wł",
+    "off": "Wył"
+  },
+  "schedule": {
+    "title": "Harmonogram",
+    "create": "Dodaj",
+    "empty": "Brak harmonogramów",
+    "switch": "Przełącznik",
+    "state": "Stan",
+    "duration": "Czas",
+    "cron": "Harmonogram",
+    "save": "Zapisz",
+    "cancel": "Anuluj",
+    "deleteConfirm": "Usunąć ten harmonogram?",
+    "hourly": "Co godzinę",
+    "daily": "Codziennie",
+    "weekly": "Co tydzień",
+    "raw": "Cron (ręcznie)",
+    "minutes": "minuty",
+    "hours": "godziny"
+  },
+  "history": {
+    "title": "Historia",
+    "loadMore": "Więcej",
+    "empty": "Brak zdarzeń",
+    "offlineCached": "Pokazuję zapisane lokalnie dane",
+    "user": "Użytkownik",
+    "when": "Kiedy",
+    "state": "Stan",
+    "switch": "Przełącznik"
+  },
+  "states": { "0": "Wył", "1": "Wł", "up": "góra", "down": "dół", "click": "klik", "stop": "stop" }
+}
