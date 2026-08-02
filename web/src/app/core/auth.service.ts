@@ -1,13 +1,17 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, signal, inject } from '@angular/core';
 import { Session } from '@supabase/supabase-js';
 import { SupabaseService } from './supabase.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+  private supabase = inject(SupabaseService);
+
   readonly session = signal<Session | null>(null);
   readonly ready = signal(false);
 
-  constructor(private supabase: SupabaseService) {
+  constructor() {
+    const supabase = this.supabase;
+
     if (!supabase.client) {
       this.ready.set(true);
       return;
@@ -31,7 +35,9 @@ export class AuthService {
   }
 
   async signInWithGoogle(): Promise<void> {
-    if (!this.supabase.client) return;
+    if (!this.supabase.client) {
+      return;
+    }
     await this.supabase.client.auth.signInWithOAuth({
       provider: 'google',
       options: { redirectTo: location.origin + '/' },

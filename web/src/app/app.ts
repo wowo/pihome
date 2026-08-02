@@ -1,6 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { UpperCasePipe } from '@angular/common';
 import { LocaleService } from './core/locale.service';
 
 @Component({

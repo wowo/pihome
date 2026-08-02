@@ -14,9 +14,16 @@ import { HistoryService } from '../../core/history.service';
       @if (history.error()) {
         <div class="mb-3 rounded-xl bg-red-50 text-red-700 text-sm px-3 py-2">{{ history.error() }}</div>
       }
-      @if (!history.items().length && !history.loading()) {
+
+      @if (history.loading() && !history.items().length) {
+        <div class="py-10 text-center text-muted text-sm">
+          <span class="spinner"></span>
+          <span class="ml-2">{{ 'common.loading' | translate }}</span>
+        </div>
+      } @else if (!history.items().length) {
         <p class="text-muted text-sm">{{ 'history.empty' | translate }}</p>
       }
+
       <div class="space-y-2">
         @for (item of history.items(); track item.id || (item.date + item.switch + item.state)) {
           <div class="bg-card border border-border rounded-xl px-3 py-2.5 shadow-sm">
@@ -30,9 +37,9 @@ import { HistoryService } from '../../core/history.service';
               </div>
               <span
                 class="text-[11px] font-semibold px-2 py-0.5 rounded-full text-white"
-                [class.bg-red-500]="item.state == '0'"
-                [class.bg-green-600]="item.state == '1'"
-                [class.bg-sky-500]="item.state != '0' && item.state != '1'"
+                [class.bg-red-500]="item.state === '0'"
+                [class.bg-green-600]="item.state === '1'"
+                [class.bg-sky-500]="item.state !== '0' && item.state !== '1'"
               >
                 {{ ('states.' + item.state) | translate }}
               </span>
@@ -40,14 +47,22 @@ import { HistoryService } from '../../core/history.service';
           </div>
         }
       </div>
-      <button
-        type="button"
-        class="mt-4 w-full rounded-xl py-3 bg-chip font-semibold text-sm"
-        [disabled]="history.loading()"
-        (click)="history.loadMore()"
-      >
-        {{ 'history.loadMore' | translate }}
-      </button>
+
+      @if (history.items().length) {
+        <button
+          type="button"
+          class="mt-4 w-full rounded-xl py-3 bg-chip font-semibold text-sm disabled:opacity-60"
+          [disabled]="history.loading()"
+          (click)="history.loadMore()"
+        >
+          @if (history.loading()) {
+            <span class="spinner spinner-sm"></span>
+            <span class="ml-2">{{ 'common.loading' | translate }}</span>
+          } @else {
+            {{ 'history.loadMore' | translate }}
+          }
+        </button>
+      }
     </div>
   `,
 })
@@ -60,7 +75,10 @@ export class HistoryPage implements OnInit {
 
   formatDate(value: string): string {
     const d = new Date(value);
-    if (Number.isNaN(d.getTime())) return value;
-    return d.toLocaleString();
+    if (Number.isNaN(d.getTime())) {
+      return value;
+    }
+    const pad = (n: number) => String(n).padStart(2, '0');
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
   }
 }

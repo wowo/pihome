@@ -1,15 +1,24 @@
 /** LAN IP / hostname entry points boot without Supabase auth. */
 export function isLanOrigin(hostname = location.hostname): boolean {
-  if (hostname === 'localhost' || hostname === '127.0.0.1') return true;
-  if (/^192\.168\.\d+\.\d+$/.test(hostname)) return true;
-  if (/^10\.\d+\.\d+\.\d+$/.test(hostname)) return true;
+  if (hostname === 'localhost' || hostname === '127.0.0.1') {
+    return true;
+  }
+  if (/^192\.168\.\d+\.\d+$/.test(hostname)) {
+    return true;
+  }
+  if (/^10\.\d+\.\d+\.\d+$/.test(hostname)) {
+    return true;
+  }
   return false;
 }
 
 export function durationToMinutes(duration: string): number {
-  if (duration.includes('m')) return Number(duration.replace('m', '')) || 0;
-  if (duration.includes('h')) return 60 * (Number(duration.replace('h', '')) || 0);
-  if (duration === 'X') return 0;
+  if (duration.includes('m')) {
+    return Number(duration.replace('m', '')) || 0;
+  }
+  if (duration.includes('h')) {
+    return 60 * (Number(duration.replace('h', '')) || 0);
+  }
   return 0;
 }
 

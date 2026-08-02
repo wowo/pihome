@@ -11,7 +11,12 @@ import { ScheduleItem, SwitchItem } from '../../core/models';
     <div class="px-3 pb-4">
       <div class="flex items-center justify-between mb-3">
         <h2 class="text-lg font-bold">{{ 'schedule.title' | translate }}</h2>
-        <button type="button" class="btn-green btn-emboss rounded-xl px-3 py-2 text-sm font-semibold" (click)="openCreate()">
+        <button
+          type="button"
+          class="btn-green btn-emboss rounded-xl px-3 py-2 text-sm font-semibold disabled:opacity-60"
+          [disabled]="loading() || saving()"
+          (click)="openCreate()"
+        >
           {{ 'schedule.create' | translate }}
         </button>
       </div>
@@ -20,27 +25,53 @@ import { ScheduleItem, SwitchItem } from '../../core/models';
         <div class="mb-3 rounded-xl bg-red-50 text-red-700 text-sm px-3 py-2">{{ error() }}</div>
       }
 
-      @if (!items().length && !loading()) {
+      @if (loading() && !items().length) {
+        <div class="py-10 text-center text-muted text-sm">
+          <span class="spinner"></span>
+          <span class="ml-2">{{ 'common.loading' | translate }}</span>
+        </div>
+      } @else if (!items().length) {
         <p class="text-muted text-sm">{{ 'schedule.empty' | translate }}</p>
       }
 
-      <div class="space-y-2">
+      <div class="space-y-2" [class.opacity-60]="loading() && items().length">
         @for (item of items(); track item.id) {
           <div class="bg-card border border-border rounded-xl px-3 py-2.5 shadow-sm">
-            <div class="flex justify-between gap-2">
-              <div>
+            <div class="flex justify-between gap-2 items-start">
+              <div class="min-w-0">
                 <div class="font-semibold text-sm">{{ item.name || item.switch }}</div>
                 <div class="text-xs text-muted font-mono mt-0.5">{{ item.schedule }}</div>
-                <div class="text-xs mt-1">
-                  {{ ('states.' + item.state) | translate }}
+                <div class="flex flex-wrap items-center gap-1.5 mt-1.5">
+                  <span
+                    class="text-[11px] font-semibold px-2 py-0.5 rounded-full text-white"
+                    [class.bg-red-500]="item.state === '0'"
+                    [class.bg-green-600]="item.state === '1'"
+                    [class.bg-sky-500]="item.state !== '0' && item.state !== '1'"
+                  >
+                    {{ ('states.' + item.state) | translate }}
+                  </span>
                   @if (item.duration) {
-                    · {{ item.duration }} {{ 'schedule.minutes' | translate }}
+                    <span class="text-[11px] text-muted">{{ item.duration }} {{ 'schedule.minutes' | translate }}</span>
                   }
                 </div>
               </div>
-              <div class="flex flex-col gap-1">
-                <button type="button" class="text-xs text-sage font-semibold" (click)="openEdit(item)">Edit</button>
-                <button type="button" class="text-xs text-red-600 font-semibold" (click)="remove(item)">✕</button>
+              <div class="flex gap-2 shrink-0">
+                <button
+                  type="button"
+                  class="min-h-11 min-w-11 px-3 rounded-xl bg-chip text-sage text-sm font-semibold disabled:opacity-40"
+                  [disabled]="saving()"
+                  (click)="openEdit(item)"
+                >
+                  {{ 'schedule.edit' | translate }}
+                </button>
+                <button
+                  type="button"
+                  class="min-h-11 min-w-11 px-3 rounded-xl bg-red-50 text-red-600 text-sm font-semibold disabled:opacity-40"
+                  [disabled]="saving()"
+                  (click)="remove(item)"
+                >
+                  {{ 'schedule.delete' | translate }}
+                </button>
               </div>
             </div>
           </div>
@@ -49,7 +80,7 @@ import { ScheduleItem, SwitchItem } from '../../core/models';
     </div>
 
     @if (form()) {
-      <div class="fixed inset-0 z-40 bg-black/30" (click)="closeForm()"></div>
+      <button type="button" class="fixed inset-0 z-40 bg-black/30" aria-label="Close" (click)="closeForm()"></button>
       <div class="fixed inset-x-0 bottom-0 z-50 bg-[#fffdfa] rounded-t-[20px] px-4 pt-3 pb-6 max-h-[85dvh] overflow-auto">
         <div class="w-9 h-1 rounded-full bg-[#d8d2c8] mx-auto mb-3"></div>
         <div class="space-y-3 text-sm">
@@ -106,11 +137,16 @@ import { ScheduleItem, SwitchItem } from '../../core/models';
             </select>
           </div>
           <div class="flex gap-2 pt-1">
-            <button type="button" class="flex-1 rounded-xl py-3 bg-chip text-ink font-semibold" (click)="closeForm()">
+            <button type="button" class="flex-1 rounded-xl py-3 bg-chip text-ink font-semibold disabled:opacity-60" [disabled]="saving()" (click)="closeForm()">
               {{ 'schedule.cancel' | translate }}
             </button>
-            <button type="button" class="flex-1 btn-green btn-emboss rounded-xl py-3 font-bold" (click)="save()">
-              {{ 'schedule.save' | translate }}
+            <button type="button" class="flex-1 btn-green btn-emboss rounded-xl py-3 font-bold disabled:opacity-60" [disabled]="saving()" (click)="save()">
+              @if (saving()) {
+                <span class="spinner spinner-sm spinner-on-dark"></span>
+                <span class="ml-2">{{ 'common.saving' | translate }}</span>
+              } @else {
+                {{ 'schedule.save' | translate }}
+              }
             </button>
           </div>
         </div>
@@ -125,6 +161,7 @@ export class SchedulePage implements OnInit {
   items = signal<ScheduleItem[]>([]);
   switchOptions = signal<SwitchItem[]>([]);
   loading = signal(false);
+  saving = signal(false);
   error = signal<string | null>(null);
   form = signal(false);
   preset = 'daily';
@@ -176,9 +213,13 @@ export class SchedulePage implements OnInit {
 
   applyPreset(preset: string): void {
     const [hh, mm] = (this.timeOfDay || '07:00').split(':');
-    if (preset === 'hourly') this.draft.schedule = '0 * * * *';
-    else if (preset === 'daily') this.draft.schedule = `${Number(mm) || 0} ${Number(hh) || 7} * * *`;
-    else if (preset === 'weekly') this.draft.schedule = `${Number(mm) || 0} ${Number(hh) || 7} * * ${this.weekday}`;
+    if (preset === 'hourly') {
+      this.draft.schedule = '0 * * * *';
+    } else if (preset === 'daily') {
+      this.draft.schedule = `${Number(mm) || 0} ${Number(hh) || 7} * * *`;
+    } else if (preset === 'weekly') {
+      this.draft.schedule = `${Number(mm) || 0} ${Number(hh) || 7} * * ${this.weekday}`;
+    }
   }
 
   async save(): Promise<void> {
@@ -189,23 +230,34 @@ export class SchedulePage implements OnInit {
       schedule: this.draft.schedule,
       ...(duration > 0 ? { duration } : {}),
     };
+    this.saving.set(true);
     try {
-      if (this.draft.id) await this.api.updateSchedule(this.draft.id, payload);
-      else await this.api.createSchedule(payload);
+      if (this.draft.id) {
+        await this.api.updateSchedule(this.draft.id, payload);
+      } else {
+        await this.api.createSchedule(payload);
+      }
       this.closeForm();
       await this.reload();
     } catch (e) {
       this.error.set(e instanceof Error ? e.message : String(e));
+    } finally {
+      this.saving.set(false);
     }
   }
 
   async remove(item: ScheduleItem): Promise<void> {
-    if (!confirm(this.translate.instant('schedule.deleteConfirm'))) return;
+    if (!confirm(this.translate.instant('schedule.deleteConfirm'))) {
+      return;
+    }
+    this.saving.set(true);
     try {
       await this.api.deleteSchedule(item.id);
       await this.reload();
     } catch (e) {
       this.error.set(e instanceof Error ? e.message : String(e));
+    } finally {
+      this.saving.set(false);
     }
   }
 }

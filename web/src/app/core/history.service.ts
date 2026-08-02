@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, signal, inject } from '@angular/core';
 import { AuthService } from './auth.service';
 import { PiApiService } from './pi-api.service';
 import { SupabaseService } from './supabase.service';
@@ -8,17 +8,15 @@ const CACHE_KEY = 'pihome.history.cache';
 
 @Injectable({ providedIn: 'root' })
 export class HistoryService {
+  private supabase = inject(SupabaseService);
+  private auth = inject(AuthService);
+  private api = inject(PiApiService);
+
   readonly items = signal<HistoryItem[]>([]);
   readonly loading = signal(false);
   readonly error = signal<string | null>(null);
   readonly fromCache = signal(false);
   private page = 0;
-
-  constructor(
-    private supabase: SupabaseService,
-    private auth: AuthService,
-    private api: PiApiService,
-  ) {}
 
   async reset(): Promise<void> {
     this.page = 0;
@@ -38,9 +36,12 @@ export class HistoryService {
           .select('id,date,switch,state,user_email')
           .order('date', { ascending: false })
           .range((nextPage - 1) * 25, nextPage * 25 - 1);
-        if (error) throw error;
+        if (error) {
+          throw error;
+        }
         batch = (data || []).map((row) => ({
           ...row,
+          state: String(row.state),
           user: row.user_email,
         }));
         this.fromCache.set(false);
