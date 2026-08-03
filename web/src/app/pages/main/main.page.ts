@@ -1,6 +1,6 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { SwitchItem } from '../../core/models';
+import { SwitchItem, TimerScheduled, isWicketScheduled } from '../../core/models';
 import { durationToMinutes } from '../../core/offline';
 import { SwitchStateService } from '../../core/switch-state.service';
 
@@ -34,10 +34,12 @@ import { SwitchStateService } from '../../core/switch-state.service';
               <div>
                 <div class="min-h-[1.25rem] mb-1.5 flex flex-wrap items-baseline gap-x-1.5 gap-y-0 leading-tight">
                   <span class="text-[13px] font-bold">{{ sw.name }}</span>
-                  @if (sw.scheduled && !sw.stateless) {
+                  @if (wicketLabel(sw); as wicket) {
+                    <span class="text-[11px] font-semibold text-red-600">{{ wicket }}</span>
+                  } @else if (timerScheduled(sw); as sched) {
                     <span class="text-[11px] font-semibold text-red-600">
-                      {{ ('states.' + sw.scheduled.state) | translate }}
-                      @if (formatWhen(sw.scheduled.when); as when) {
+                      {{ ('states.' + sched.state) | translate }}
+                      @if (formatWhen(sched.when); as when) {
                         {{ when }}
                       }
                     </span>
@@ -57,7 +59,14 @@ import { SwitchStateService } from '../../core/switch-state.service';
                     }
                   </button>
                 } @else if (sw.type === 'click_sequence') {
-                  <button type="button" class="btn-blue-alt btn-emboss w-12 h-10 rounded-xl text-base" [class.btn-busy]="switches.isBusy(sw.key)" [disabled]="switches.isBusy(sw.key)" (click)="tap(sw, 'click')" title="Furtka">
+                  <button
+                    type="button"
+                    class="btn-blue-alt btn-emboss w-12 h-10 rounded-xl text-base"
+                    [class.btn-busy]="switches.isBusy(sw.key) || isWicketLocked(sw)"
+                    [disabled]="switches.isBusy(sw.key) || isWicketLocked(sw)"
+                    (click)="tap(sw, 'click')"
+                    title="Furtka"
+                  >
                     @if (switches.isBusy(sw.key)) {
                       <span class="spinner spinner-sm spinner-on-dark"></span>
                     } @else {
@@ -157,9 +166,11 @@ import { SwitchStateService } from '../../core/switch-state.service';
     }
   `,
 })
-export class MainPage implements OnInit {
+export class MainPage implements OnInit, OnDestroy {
   switches = inject(SwitchStateService);
   private translate = inject(TranslateService);
+  /** Drives wicket countdown re-render each second. */
+  now = signal(Date.now());
   sheet = signal<{
     key: string;
     name: string;
@@ -170,10 +181,18 @@ export class MainPage implements OnInit {
 
   private longTimer: ReturnType<typeof setTimeout> | null = null;
   private longFired = false;
+  private tickTimer: ReturnType<typeof setInterval> | null = null;
 
   ngOnInit(): void {
     // Shell already starts SwitchStateService; keep idempotent start for deep links.
     this.switches.start();
+    this.tickTimer = setInterval(() => this.now.set(Date.now()), 1000);
+  }
+
+  ngOnDestroy(): void {
+    if (this.tickTimer) {
+      clearInterval(this.tickTimer);
+    }
   }
 
   /** Multiple presets → chevron / long-press sheet (Led tył). */
@@ -183,6 +202,35 @@ export class MainPage implements OnInit {
 
   isOn(sw: SwitchItem): boolean {
     return sw.state === '1';
+  }
+
+  timerScheduled(sw: SwitchItem): TimerScheduled | null {
+    const s = sw.scheduled;
+    if (!s || isWicketScheduled(s) || sw.stateless) {
+      return null;
+    }
+    return s;
+  }
+
+  wicketLabel(sw: SwitchItem): string | null {
+    const s = sw.scheduled;
+    if (!isWicketScheduled(s)) {
+      return null;
+    }
+    void this.now(); // subscribe to tick
+    const n = Math.max(0, Math.ceil((new Date(s.ends_at).getTime() - Date.now()) / 1000));
+    const key =
+      s.phase === 'opening'
+        ? 'main.wicketOpening'
+        : s.phase === 'waiting'
+          ? 'main.wicketWaiting'
+          : 'main.wicketClosing';
+    return this.translate.instant(key, { n });
+  }
+
+  isWicketLocked(sw: SwitchItem): boolean {
+    const s = sw.scheduled;
+    return isWicketScheduled(s) && (s.phase === 'opening' || s.phase === 'closing');
   }
 
   /** Next change time; include day if not today. */
@@ -205,7 +253,7 @@ export class MainPage implements OnInit {
   }
 
   async tap(sw: SwitchItem, state: string, duration?: number): Promise<void> {
-    if (this.switches.isBusy(sw.key)) {
+    if (this.switches.isBusy(sw.key) || this.isWicketLocked(sw)) {
       return;
     }
     await this.switches.toggle(sw, state, duration);
@@ -267,12 +315,13 @@ export class MainPage implements OnInit {
 
   openSheet(sw: SwitchItem): void {
     const durations = Array.isArray(sw.durations) ? sw.durations : [];
+    const timer = this.timerScheduled(sw);
     this.sheet.set({
       key: sw.key,
       name: sw.name,
       durations,
       mode: this.isOn(sw) ? 'off' : 'on',
-      until: this.formatWhen(sw.scheduled?.when),
+      until: this.formatWhen(timer?.when),
     });
   }
 

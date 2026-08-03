@@ -19,7 +19,10 @@
     "customPrompt": "Ile godzin?",
     "on": "Wł",
     "off": "Wył",
-    "until": "Do {{time}}"
+    "until": "Do {{time}}",
+    "wicketOpening": "Otwieranie {{n}}",
+    "wicketWaiting": "Oczekiwanie {{n}}",
+    "wicketClosing": "Zamykanie {{n}}"
   },
   "schedule": {
     "title": "Harmonogram",

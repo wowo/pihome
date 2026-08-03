@@ -145,7 +145,8 @@ export class SwitchStateService implements OnDestroy {
     const next: SwitchItem = {
       ...prev,
       state: row['state'] == null ? prev.state : String(row['state']),
-      scheduled: (row['scheduled'] as SwitchItem['scheduled']) ?? prev.scheduled,
+      // Explicit null clears wicket/timer; ?? would keep the stale value.
+      scheduled: ('scheduled' in row ? (row['scheduled'] as SwitchItem['scheduled']) : prev.scheduled) ?? null,
       name: typeof row['name'] === 'string' ? row['name'] : prev.name,
       type: typeof row['type'] === 'string' ? row['type'] : prev.type,
       stateless: typeof row['stateless'] === 'boolean' ? row['stateless'] : prev.stateless,

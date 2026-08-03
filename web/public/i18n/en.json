@@ -19,7 +19,10 @@
     "customPrompt": "How many hours?",
     "on": "On",
     "off": "Off",
-    "until": "Until {{time}}"
+    "until": "Until {{time}}",
+    "wicketOpening": "Opening {{n}}",
+    "wicketWaiting": "Waiting {{n}}",
+    "wicketClosing": "Closing {{n}}"
   },
   "schedule": {
     "title": "Schedule",

@@ -1,5 +1,27 @@
 export type SwitchState = '0' | '1' | 'up' | 'down' | 'stop' | 'click' | string;
 
+export type WicketPhase = 'opening' | 'waiting' | 'closing';
+
+export interface TimerScheduled {
+  when: string;
+  state: SwitchState;
+}
+
+export interface WicketScheduled {
+  kind: 'wicket';
+  phase: WicketPhase;
+  ends_at: string;
+  open_s: number;
+  wait_s: number;
+  close_ui_s: number;
+}
+
+export type SwitchScheduled = TimerScheduled | WicketScheduled;
+
+export function isWicketScheduled(s: SwitchScheduled | null | undefined): s is WicketScheduled {
+  return !!s && (s as WicketScheduled).kind === 'wicket';
+}
+
 export interface SwitchItem {
   key: string;
   name: string;
@@ -7,7 +29,7 @@ export interface SwitchItem {
   type: string;
   stateless?: boolean;
   durations?: string[] | false;
-  scheduled?: { when: string; state: SwitchState } | null;
+  scheduled?: SwitchScheduled | null;
   loading?: boolean;
 }
 
