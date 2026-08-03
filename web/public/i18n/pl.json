@@ -1,5 +1,6 @@
 {
-  "nav": { "main": "Main", "schedule": "Harmonogram", "history": "Historia" },
+  "common": { "loading": "Ładowanie…", "saving": "Zapisywanie…" },
+  "nav": { "main": "Główna", "schedule": "Harmonogram", "history": "Historia" },
   "login": {
     "title": "PiHome",
     "subtitle": "Zaloguj się kontem Google",
@@ -11,11 +12,14 @@
     "offline": "Tryb offline — sterowanie lokalne",
     "polling": "Brak połączenia z Supabase — odświeżanie z Pi",
     "durationTitle": "{{name}} — włącz na…",
+    "activeTitle": "{{name}}",
     "noLimit": "Włącz bez limitu",
+    "turnOff": "Wyłącz",
     "custom": "Własny…",
     "customPrompt": "Ile godzin?",
     "on": "Wł",
-    "off": "Wył"
+    "off": "Wył",
+    "until": "Do {{time}}"
   },
   "schedule": {
     "title": "Harmonogram",
@@ -27,6 +31,8 @@
     "cron": "Harmonogram",
     "save": "Zapisz",
     "cancel": "Anuluj",
+    "edit": "Edytuj",
+    "delete": "Usuń",
     "deleteConfirm": "Usunąć ten harmonogram?",
     "hourly": "Co godzinę",
     "daily": "Codziennie",

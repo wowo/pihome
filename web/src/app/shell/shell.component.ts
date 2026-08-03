@@ -1,26 +1,23 @@
-import { UpperCasePipe } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
-import { LocaleService } from '../core/locale.service';
+import { SwitchStateService } from '../core/switch-state.service';
 
 @Component({
   selector: 'app-shell',
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, TranslatePipe, UpperCasePipe],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, TranslatePipe],
   template: `
-    <div class="min-h-dvh flex flex-col bg-paper text-ink">
-      <header class="flex items-center justify-between px-3.5 pt-3 pb-1.5">
+    <div class="min-h-dvh flex flex-col bg-paper text-ink select-none">
+      <header class="flex items-center px-3.5 pt-3 pb-1.5">
         <div class="flex items-center gap-2">
-          <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-sage to-sage-dark btn-emboss"></div>
-          <strong class="text-[17px] tracking-tight">PiHome</strong>
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-sage to-sage-dark btn-emboss flex items-center justify-center">
+            <img src="brand-mark.svg?v=11" alt="" width="48" height="48" class="w-full h-full" />
+          </div>
+          <strong class="text-[26px] tracking-tight">PiHome</strong>
+          @if (switches.loading()) {
+            <span class="spinner spinner-sm" aria-label="Loading"></span>
+          }
         </div>
-        <button
-          type="button"
-          class="text-[11px] font-semibold text-[#5c5348] bg-chip px-2 py-1 rounded-full"
-          (click)="locale.toggle()"
-        >
-          {{ locale.current | uppercase }}
-        </button>
       </header>
 
       <main class="flex-1 overflow-auto pb-20 pt-2">
@@ -46,6 +43,10 @@ import { LocaleService } from '../core/locale.service';
     </div>
   `,
 })
-export class ShellComponent {
-  locale = inject(LocaleService);
+export class ShellComponent implements OnInit {
+  switches = inject(SwitchStateService);
+
+  ngOnInit(): void {
+    this.switches.start();
+  }
 }

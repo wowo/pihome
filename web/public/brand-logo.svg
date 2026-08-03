@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <!-- PiHome mark: house + 3x3 node grid (Raspberry Pi nod) + stem -->
+  <rect width="512" height="512" fill="#f7f4ef"/>
+  <g stroke="#2a2622" stroke-width="22" stroke-linecap="round" stroke-linejoin="round">
+    <!-- house outline -->
+    <path d="M128 232 L256 120 L384 232 V392 H128 Z"/>
+    <!-- grid lines -->
+    <path d="M200 248 H312 M200 288 H312 M200 328 H312"/>
+    <path d="M200 248 V328 M256 248 V328 M312 248 V328"/>
+    <!-- stem through roof -->
+    <path d="M200 248 V96"/>
+  </g>
+  <g fill="#2a2622">
+    <!-- 3x3 nodes -->
+    <circle cx="200" cy="248" r="16"/>
+    <circle cx="256" cy="248" r="16"/>
+    <circle cx="312" cy="248" r="16"/>
+    <circle cx="200" cy="288" r="16"/>
+    <circle cx="256" cy="288" r="16"/>
+    <circle cx="312" cy="288" r="16"/>
+    <circle cx="200" cy="328" r="16"/>
+    <circle cx="256" cy="328" r="16"/>
+    <circle cx="312" cy="328" r="16"/>
+    <!-- tip above roof -->
+    <circle cx="200" cy="96" r="18"/>
+  </g>
+</svg>

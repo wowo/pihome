@@ -1,6 +1,6 @@
 # PiHome web (Angular PWA)
 
-Soft-daylight Angular rewrite. Old Yeoman app remains in `/app` until cutover.
+Soft-daylight Angular PWA. Legacy AngularJS UI lives under `/app` (unused in production).
 
 ## Dev
 

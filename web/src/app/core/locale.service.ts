@@ -9,18 +9,24 @@ export class LocaleService {
 
   init(): void {
     this.translate.addLangs(['pl', 'en']);
+    // UI defaults to PL; English stays available via localStorage `pihome.lang=en`.
+    const params = new URLSearchParams(location.search);
+    const fromQuery = params.get('lang');
+    if (fromQuery === 'en' || fromQuery === 'pl') {
+      localStorage.setItem(KEY, fromQuery);
+    }
     const lang = localStorage.getItem(KEY) || 'pl';
     this.translate.setFallbackLang('pl');
-    this.translate.use(lang);
+    this.translate.use(lang === 'en' ? 'en' : 'pl');
   }
 
   get current(): string {
     return this.translate.getCurrentLang() || 'pl';
   }
 
-  toggle(): void {
-    const next = this.current === 'pl' ? 'en' : 'pl';
-    this.translate.use(next);
-    localStorage.setItem(KEY, next);
+  /** Optional escape hatch — no UI toggle. */
+  use(lang: 'pl' | 'en'): void {
+    this.translate.use(lang);
+    localStorage.setItem(KEY, lang);
   }
 }

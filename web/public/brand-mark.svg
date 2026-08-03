@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <!-- Comfortable inset + thin strokes; grid spaced so nodes read at 32px. -->
+  <g transform="translate(32 28) scale(0.875)" stroke="#fff" stroke-width="17" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M128 232 L256 120 L384 232 V400 H128 Z"/>
+    <path d="M196 244 H316 M196 296 H316 M196 348 H316"/>
+    <path d="M196 244 V348 M256 244 V348 M316 244 V348"/>
+    <path d="M196 244 V96"/>
+  </g>
+  <g transform="translate(32 28) scale(0.875)" fill="#fff">
+    <circle cx="196" cy="244" r="15"/>
+    <circle cx="256" cy="244" r="15"/>
+    <circle cx="316" cy="244" r="15"/>
+    <circle cx="196" cy="296" r="15"/>
+    <circle cx="256" cy="296" r="15"/>
+    <circle cx="316" cy="296" r="15"/>
+    <circle cx="196" cy="348" r="15"/>
+    <circle cx="256" cy="348" r="15"/>
+    <circle cx="316" cy="348" r="15"/>
+    <circle cx="196" cy="96" r="17"/>
+  </g>
+</svg>

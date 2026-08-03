@@ -1,4 +1,5 @@
 {
+  "common": { "loading": "Loading…", "saving": "Saving…" },
   "nav": { "main": "Main", "schedule": "Schedule", "history": "History" },
   "login": {
     "title": "PiHome",
@@ -11,11 +12,14 @@
     "offline": "Offline mode — local control",
     "polling": "No Supabase connection — polling Pi",
     "durationTitle": "{{name}} — turn on for…",
+    "activeTitle": "{{name}}",
     "noLimit": "Turn on without limit",
+    "turnOff": "Turn off",
     "custom": "Custom…",
     "customPrompt": "How many hours?",
     "on": "On",
-    "off": "Off"
+    "off": "Off",
+    "until": "Until {{time}}"
   },
   "schedule": {
     "title": "Schedule",
@@ -27,6 +31,8 @@
     "cron": "Schedule",
     "save": "Save",
     "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
     "deleteConfirm": "Delete this schedule?",
     "hourly": "Hourly",
     "daily": "Daily",

@@ -4,7 +4,7 @@ Approved 2026-08-01. Soft daylight Angular PWA + Supabase storage/auth. Sensors 
 
 ## Goals
 
-- Replace Angular 1 Yeoman app with latest Angular PWA (Tailwind, PL/EN, iPhone SE-first).
+- Replace legacy AngularJS UI with latest Angular PWA (Tailwind, PL/EN, iPhone SE-first).
 - Three tabs: Main, Schedule, History. Sensors charting out of MVP (historical data migrated for later).
 - Move MongoDB history/readings to Supabase; retire Cloudflare Access; keep Cloudflare proxy for TLS.
 - Switch control works on LAN with no internet.
